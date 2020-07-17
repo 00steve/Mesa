@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/ladder_9ft.obj-9edff0d70e3b3f93a7f45a7a8509b451.mesh"
+
+[deps]
+
+files=[ "res://.import/ladder_9ft.obj-9edff0d70e3b3f93a7f45a7a8509b451.mesh" ]
+
+source_file="res://obj/ladder_9ft.obj"
+dest_files=[ "res://.import/ladder_9ft.obj-9edff0d70e3b3f93a7f45a7a8509b451.mesh", "res://.import/ladder_9ft.obj-9edff0d70e3b3f93a7f45a7a8509b451.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
