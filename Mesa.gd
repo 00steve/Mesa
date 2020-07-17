@@ -8,8 +8,8 @@ extends Spatial
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -18,3 +18,6 @@ func _process(delta):
 		get_tree().quit()
 	if(Input.is_action_just_pressed("ui_restart")):
 		get_tree().reload_current_scene()
+		
+	if(Input.is_action_just_pressed("ui_toggle_fullscreen")):
+		OS.window_fullscreen = !OS.window_fullscreen;

@@ -1,31 +1,50 @@
 extends KinematicBody
 
-var mouseSensitivity = .3
+var mouseSensitivity = .2;
 
-var cameraAngle = Vector3()
-var speed = 200
-var strafeDirection = Vector3()
-var moveDirection = Vector3()
-var velocity = Vector3()
-var gravity = -9.81
-var isOnFloor = false
+var cameraAngle = Vector3();
+var cameraRotateVelocity = Vector2();
+var cameraRotateSmoothing = 3;
+var mouseMove = Vector2();
+var speed = 200;
+var strafeDirection = Vector3();
+var moveDirection = Vector3();
+var velocity = Vector3();
+var gravity = -9.81;
+var isOnFloor = false;
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	cameraAngle = Vector3(1.57,0,0)
-	moveDirection = Vector3(0,0,0)
+	cameraAngle = Vector3(1.57,0,0);
+	cameraRotateVelocity = Vector2(0,0);
+	moveDirection = Vector3(0,0,0);
 
 func _physics_process(delta):
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	#smooth camera rotation
+	cameraRotateVelocity.y = (cameraRotateVelocity.y * (cameraRotateSmoothing-1) 
+		+ deg2rad(mouseMove.x) * mouseSensitivity) / cameraRotateSmoothing;
+	cameraRotateVelocity.x = (cameraRotateVelocity.x * (cameraRotateSmoothing-1) 
+		+ deg2rad(mouseMove.y) * mouseSensitivity) / cameraRotateSmoothing;
+	mouseMove = Vector2(0,0); #reset mouseMove after every time it updates the cameraVelocity
+	cameraAngle.y += cameraRotateVelocity.y;
+	cameraAngle.x += cameraRotateVelocity.x;
+	if cameraAngle.x < 0:
+		cameraAngle.x = 0;
+	if cameraAngle.x > 3.14:
+		cameraAngle.x = 3.14;
+	$head.rotation = cameraAngle;
 
-	strafeDirection = strafeDirection.normalized()
+
+
+
+	strafeDirection = strafeDirection.normalized();
 	
 	#rotate movement direction by camera y angle
 	moveDirection = Vector3(sin(cameraAngle.y)*strafeDirection.z
 		+ cos(cameraAngle.y)*strafeDirection.x,0,
 		cos(cameraAngle.y)*strafeDirection.z
-		+ -sin(cameraAngle.y)*strafeDirection.x)*5
+		+ -sin(cameraAngle.y)*strafeDirection.x)*5;
 	
 	
 	if velocity.y > 0:
@@ -49,13 +68,8 @@ func _physics_process(delta):
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		cameraAngle.y += deg2rad(-event.relative.x) * mouseSensitivity
-		cameraAngle.x += deg2rad(-event.relative.y) * mouseSensitivity
-		if cameraAngle.x < 0:
-			cameraAngle.x = 0
-		if cameraAngle.x > 3.14:
-			cameraAngle.x = 3.14
-		$head.rotation = cameraAngle
+		mouseMove = Vector2(-event.relative.x,-event.relative.y);
+
 		
 	strafeDirection = Vector3(0,0,0)
 	

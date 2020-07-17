@@ -3,7 +3,7 @@
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://PlayerBody.gd" type="Script" id=2]
 
-[sub_resource type="CapsuleShape" id=2]
+[sub_resource type="CapsuleShape" id=1]
 radius = 0.4
 
 [node name="Player" type="Spatial"]
@@ -14,7 +14,7 @@ script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="PlayerBody"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="head" type="Spatial" parent="PlayerBody"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0 )

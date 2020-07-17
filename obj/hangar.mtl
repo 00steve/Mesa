@@ -1,5 +1,5 @@
 # Blender MTL File: 'hangar.blend'
-# Material Count: 5
+# Material Count: 8
 
 newmtl Material.001
 Ns 225.000000
@@ -11,6 +11,17 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd TexturesCom_Concrete_WoodGrain_512_albedo.jpg
+
+newmtl Material.002
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd dirty-metal-diamond-grip-pattern-texture-background_4043-382.jpg
 
 newmtl Material.003
 Ns 225.000000
@@ -41,6 +52,27 @@ Kd 0.8 0.8 0.8
 Ks 0.8 0.8 0.8
 d 1
 illum 2
+
+newmtl None.001
+Ns 500.000001
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl rusty_metal
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.108106 0.150915 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd rusty01.jpg
 
 newmtl rustymetal03
 Ns 225.000000
