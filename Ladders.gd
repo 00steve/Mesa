@@ -21,15 +21,10 @@ func _ready():
 	var count = 0;
 	var area;
 	for node in self.get_children():
-		#if(node.get_node("area").is_type("Area")): 
-		count += 1;
 		area = node.get_node("LadderArea");
-		#print(" - " + area.get_class());
-		area.connect("start_climbing",playerBody,"climb");
-		
-	print("found " + count as String + " children");
-	
-	
+		area.connect("start_climbing",playerBody,"startClimbing");
+		area.connect("end_climbing",playerBody,"endClimbing");
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

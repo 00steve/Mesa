@@ -1,24 +1,37 @@
 extends KinematicBody
 
+#movement states
+# - 0 = free movement
+# - 1 = climbing
+
+
 var mouseSensitivity = .3;
 
-var cameraAngle = Vector3();
-var cameraRotateVelocity = Vector2();
-var cameraRotateSmoothing = 3;
-var mouseMove = Vector2();
-var speed = 200;
-var strafeDirection = Vector3();
-var moveDirection = Vector3();
-var velocity = Vector3();
-var gravity = -9.81;
-var isOnFloor = false;
-
+var cameraAngle;
+var cameraRotateVelocity;
+var cameraRotateSmoothing;
+var mouseMove;
+var speed;
+var strafeDirection;
+var moveDirection;
+var velocity;
+var gravity;
+var isOnFloor;
+var movementState;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	cameraAngle = Vector3(1.57,0,0);
 	cameraRotateVelocity = Vector2(0,0);
+	cameraRotateSmoothing = 3;
+	mouseMove = Vector2(0,0);
+	speed = 200;
+	strafeDirection = Vector3(0,0,0);
 	moveDirection = Vector3(0,0,0);
+	velocity = Vector3(0,0,0);
+	gravity = -9.81;
+	isOnFloor = false;
+	movementState = 0;
 
 func _physics_process(delta):
 	aim();
@@ -61,32 +74,59 @@ func aim():
 	if cameraRotateVelocity.x != 0 && cameraRotateVelocity.y != 0:
 		$PlayerHead.rotation = cameraAngle;
 
-func climb(area):
-	if area == self:
-		print("climbing, bitches!");
-	else:
-		print("some other bitch needs to climb");
+func startClimbing(area):
+	if area != self:
+		return;
+	movementState = 1;
+	print("climbing, bitches!");
+
+func endClimbing(area):
+	if area != self:
+		return;
+	movementState = 2;
+	print("stop climbing, bitches");
 
 
 func move(delta):
 	strafeDirection = strafeDirection.normalized();
 	
-	#rotate movement direction by camera y angle
 	moveDirection = Vector3(sin(cameraAngle.y)*strafeDirection.z
 		+ cos(cameraAngle.y)*strafeDirection.x,0,
 		cos(cameraAngle.y)*strafeDirection.z
 		+ -sin(cameraAngle.y)*strafeDirection.x)*5;
-	if velocity.y > 0:
-		gravity = -20
-	else:
-		gravity = -30
 	
+	
+	match movementState:
+		0: 
+			#rotate movement direction by camera y angle
+			
+			if velocity.y > 0:
+				gravity = -20;
+			else:
+				gravity = -30;
+			velocity.y += gravity * delta;
+			if isOnFloor:
+				velocity.x = moveDirection.x;
+				velocity.z = moveDirection.z;
+		1:#climbing
+			gravity = 0;
+			moveDirection = Vector3(0,1,0);
+			velocity.x = moveDirection.x;
+			velocity.y = moveDirection.y;
+			velocity.z = moveDirection.z;
+		2: #end climbing
+			if velocity.y > 0:
+				gravity = -20;
+			else:
+				gravity = -30;
+			velocity.y += gravity * delta;
+			velocity.x = moveDirection.x;
+			velocity.z = moveDirection.z;
+			
 	#update the velocity of the player. Always update the velocity based on 
 	#gravity. Only update the x/z velocities if the player is on the floor.
-	velocity.y += gravity * delta
-	if isOnFloor:
-		velocity.x = moveDirection.x
-		velocity.z = moveDirection.z
+	
+
 	
 	velocity = move_and_slide(velocity,Vector3(0,1,0))
 	
