@@ -32,6 +32,7 @@ material/9 = null
 material/10 = null
 material/11 = null
 material/12 = null
+material/13 = null
 
 [node name="StaticBody" type="StaticBody" parent="hangar"]
 

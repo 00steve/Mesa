@@ -53,11 +53,20 @@ func _input(event):
 		strafeDirection.z -= 1
 	if Input.is_action_pressed("move_backward"):
 		strafeDirection.z += 1
-		
-	if isOnFloor:
-		if Input.is_action_pressed("move_jump"):
-			velocity.y = 10
-
+	
+	if Input.is_action_pressed("move_jump"):
+		match movementState:
+			0: 
+				if isOnFloor:
+					velocity.y = 10;
+			1:
+				print("jump from the ladder");
+				velocity = Vector3(sin(cameraAngle.y)*strafeDirection.z
+					+ cos(cameraAngle.y)*strafeDirection.x,2,
+					cos(cameraAngle.y)*strafeDirection.z
+					+ -sin(cameraAngle.y)*strafeDirection.x)*5;
+				movementState = 0;
+				gravity = -20;
 
 func aim():
 	#smooth camera rotation
@@ -80,13 +89,12 @@ func startClimbing(area):
 	if area != self:
 		return;
 	movementState = 1;
-	print("climbing, bitches!");
 
 func endClimbing(area):
 	if area != self:
 		return;
-	movementState = 2;
-	print("stop climbing, bitches");
+	if movementState == 1:
+		movementState = 2;
 
 
 func move(delta):
