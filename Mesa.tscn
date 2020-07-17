@@ -23,3 +23,6 @@ script = ExtResource( 6 )
 
 [node name="Ladder" parent="Hangar1/Ladders" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 4, -37 )
+
+[node name="Ladder2" parent="Hangar1/Ladders" instance=ExtResource( 4 )]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -31, 4, -37 )
