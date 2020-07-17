@@ -17,6 +17,7 @@ var moveDirection;
 var velocity;
 var gravity;
 var isOnFloor;
+var climbSpeed;
 var movementState;
 
 # Called when the node enters the scene tree for the first time.
@@ -31,6 +32,7 @@ func _ready():
 	velocity = Vector3(0,0,0);
 	gravity = -9.81;
 	isOnFloor = false;
+	climbSpeed = 2;
 	movementState = 0;
 
 func _physics_process(delta):
@@ -90,16 +92,16 @@ func endClimbing(area):
 func move(delta):
 	strafeDirection = strafeDirection.normalized();
 	
-	moveDirection = Vector3(sin(cameraAngle.y)*strafeDirection.z
-		+ cos(cameraAngle.y)*strafeDirection.x,0,
-		cos(cameraAngle.y)*strafeDirection.z
-		+ -sin(cameraAngle.y)*strafeDirection.x)*5;
+
 	
 	
 	match movementState:
 		0: 
 			#rotate movement direction by camera y angle
-			
+			moveDirection = Vector3(sin(cameraAngle.y)*strafeDirection.z
+				+ cos(cameraAngle.y)*strafeDirection.x,0,
+				cos(cameraAngle.y)*strafeDirection.z
+				+ -sin(cameraAngle.y)*strafeDirection.x)*5;
 			if velocity.y > 0:
 				gravity = -20;
 			else:
@@ -110,11 +112,15 @@ func move(delta):
 				velocity.z = moveDirection.z;
 		1:#climbing
 			gravity = 0;
-			moveDirection = Vector3(0,1,0);
+			moveDirection = Vector3(0,cos(-cameraAngle.x)*strafeDirection.z*climbSpeed,0);
 			velocity.x = moveDirection.x;
 			velocity.y = moveDirection.y;
 			velocity.z = moveDirection.z;
 		2: #end climbing
+			moveDirection = Vector3(sin(cameraAngle.y)*strafeDirection.z
+				+ cos(cameraAngle.y)*strafeDirection.x,0,
+				cos(cameraAngle.y)*strafeDirection.z
+				+ -sin(cameraAngle.y)*strafeDirection.x)*5;
 			if velocity.y > 0:
 				gravity = -20;
 			else:
@@ -122,6 +128,8 @@ func move(delta):
 			velocity.y += gravity * delta;
 			velocity.x = moveDirection.x;
 			velocity.z = moveDirection.z;
+			if isOnFloor:
+				movementState = 0;
 			
 	#update the velocity of the player. Always update the velocity based on 
 	#gravity. Only update the x/z velocities if the player is on the floor.
