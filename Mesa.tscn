@@ -9,9 +9,6 @@
 [node name="Mesa" type="Spatial"]
 script = ExtResource( 3 )
 
-[node name="Spatial" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1, 0 )
-
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 3, -41 )
 
@@ -26,3 +23,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36.7502, 3.92207, -37.1287 )
 
 [node name="Ladder3" parent="Ladders" instance=ExtResource( 4 )]
 transform = Transform( -0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -30.7502, 3.92207, -37.1287 )
+
+[node name="Hangar1" type="Node" parent="."]
+
+[node name="Hangar1Model" parent="Hangar1" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1, 0 )

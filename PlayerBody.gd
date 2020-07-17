@@ -39,7 +39,6 @@ func _physics_process(delta):
 	aim();
 	move(delta);
 
-
 func _input(event):
 	if event is InputEventMouseMotion:
 		mouseMove = Vector2(-event.relative.x,-event.relative.y);
@@ -96,13 +95,9 @@ func endClimbing(area):
 	if movementState == 1:
 		movementState = 2;
 
-
 func move(delta):
 	strafeDirection = strafeDirection.normalized();
-	
 
-	
-	
 	match movementState:
 		0: 
 			#rotate movement direction by camera y angle
@@ -143,10 +138,6 @@ func move(delta):
 			
 	#update the velocity of the player. Always update the velocity based on 
 	#gravity. Only update the x/z velocities if the player is on the floor.
-	
-
-	
 	velocity = move_and_slide(velocity,Vector3(0,1,0))
-	
 	#at the end of everything, check to see if the player is on the floor
 	isOnFloor = is_on_floor()
