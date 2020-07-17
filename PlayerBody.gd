@@ -116,6 +116,8 @@ func move(delta):
 			velocity.x = moveDirection.x;
 			velocity.y = moveDirection.y;
 			velocity.z = moveDirection.z;
+			if velocity.y < 0 && isOnFloor:
+				movementState = 0;
 		2: #end climbing
 			moveDirection = Vector3(sin(cameraAngle.y)*strafeDirection.z
 				+ cos(cameraAngle.y)*strafeDirection.x,0,
