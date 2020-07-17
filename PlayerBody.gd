@@ -1,6 +1,6 @@
 extends KinematicBody
 
-var mouseSensitivity = .2;
+var mouseSensitivity = .3;
 
 var cameraAngle = Vector3();
 var cameraRotateVelocity = Vector2();
@@ -21,6 +21,30 @@ func _ready():
 	moveDirection = Vector3(0,0,0);
 
 func _physics_process(delta):
+	aim();
+	move(delta);
+
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		mouseMove = Vector2(-event.relative.x,-event.relative.y);
+
+	strafeDirection = Vector3(0,0,0)
+	if Input.is_action_pressed("move_left"):
+		strafeDirection.x -= 1
+	if Input.is_action_pressed("move_right"):
+		strafeDirection.x += 1
+	if Input.is_action_pressed("move_forward"):
+		strafeDirection.z -= 1
+	if Input.is_action_pressed("move_backward"):
+		strafeDirection.z += 1
+		
+	if isOnFloor:
+		if Input.is_action_pressed("move_jump"):
+			velocity.y = 10
+
+
+func aim():
 	#smooth camera rotation
 	cameraRotateVelocity.y = (cameraRotateVelocity.y * (cameraRotateSmoothing-1) 
 		+ deg2rad(mouseMove.x) * mouseSensitivity) / cameraRotateSmoothing;
@@ -33,11 +57,18 @@ func _physics_process(delta):
 		cameraAngle.x = 0;
 	if cameraAngle.x > 3.14:
 		cameraAngle.x = 3.14;
-	$head.rotation = cameraAngle;
+	#only change the head rotation if the camera rotation velocity is not zero
+	if cameraRotateVelocity.x != 0 && cameraRotateVelocity.y != 0:
+		$PlayerHead.rotation = cameraAngle;
+
+func climb(area):
+	if area == self:
+		print("climbing, bitches!");
+	else:
+		print("some other bitch needs to climb");
 
 
-
-
+func move(delta):
 	strafeDirection = strafeDirection.normalized();
 	
 	#rotate movement direction by camera y angle
@@ -45,8 +76,6 @@ func _physics_process(delta):
 		+ cos(cameraAngle.y)*strafeDirection.x,0,
 		cos(cameraAngle.y)*strafeDirection.z
 		+ -sin(cameraAngle.y)*strafeDirection.x)*5;
-	
-	
 	if velocity.y > 0:
 		gravity = -20
 	else:
@@ -63,24 +92,3 @@ func _physics_process(delta):
 	
 	#at the end of everything, check to see if the player is on the floor
 	isOnFloor = is_on_floor()
-	
-
-
-func _input(event):
-	if event is InputEventMouseMotion:
-		mouseMove = Vector2(-event.relative.x,-event.relative.y);
-
-		
-	strafeDirection = Vector3(0,0,0)
-	
-	if Input.is_action_pressed("move_left"):
-		strafeDirection.x -= 1
-	if Input.is_action_pressed("move_right"):
-		strafeDirection.x += 1
-	if Input.is_action_pressed("move_forward"):
-		strafeDirection.z -= 1
-	if Input.is_action_pressed("move_backward"):
-		strafeDirection.z += 1
-	if isOnFloor:
-		if Input.is_action_pressed("move_jump"):
-			velocity.y = 10

@@ -12,13 +12,13 @@ script = ExtResource( 1 )
 [node name="PlayerBody" type="KinematicBody" parent="."]
 script = ExtResource( 2 )
 
-[node name="CollisionShape" type="CollisionShape" parent="PlayerBody"]
+[node name="PlayerCollisionShape" type="CollisionShape" parent="PlayerBody"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 shape = SubResource( 1 )
 
-[node name="head" type="Spatial" parent="PlayerBody"]
+[node name="PlayerHead" type="Spatial" parent="PlayerBody"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0 )
 
-[node name="Camera" type="Camera" parent="PlayerBody/head"]
+[node name="Camera" type="Camera" parent="PlayerBody/PlayerHead"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
 far = 268.3
