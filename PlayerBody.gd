@@ -7,18 +7,29 @@ extends KinematicBody
 
 var mouseSensitivity = .3;
 
+#camera input
 var cameraAngle;
 var cameraRotateVelocity;
 var cameraRotateSmoothing;
 var mouseMove;
+
+#movement input
 var speed;
 var strafeDirection;
 var moveDirection;
+
+#movement physics
 var velocity;
 var gravity;
 var isOnFloor;
 var climbSpeed;
 var movementState;
+
+var pressingInteractButton;
+var canInteract;
+var interacting;
+var interactions;
+var closestInteraction;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,8 +45,17 @@ func _ready():
 	isOnFloor = false;
 	climbSpeed = 2;
 	movementState = 0;
+	
+	#interaction variables
+	pressingInteractButton = false;
+	canInteract = 0;
+	interacting = false;
+	interactions = [];
+	interactions.resize(20);#this should be more than enough things ever. We'll see
+	closestInteraction = null;
 
 func _physics_process(delta):
+	interact();
 	aim();
 	move(delta);
 
@@ -53,6 +73,8 @@ func _input(event):
 	if Input.is_action_pressed("move_backward"):
 		strafeDirection.z += 1
 	
+	pressingInteractButton = Input.is_action_pressed("move_interact");
+
 	if Input.is_action_pressed("move_jump"):
 		match movementState:
 			0: 
@@ -84,6 +106,26 @@ func aim():
 	if cameraRotateVelocity.x != 0 && cameraRotateVelocity.y != 0:
 		$PlayerHead.rotation = cameraAngle;
 
+func getClosestInteraction():
+	var dist = Vector2(10000,10000);
+	var id;
+	var pos = self.get_parent();
+	closestInteraction = null;
+	for ob in interactions:
+		id = ob;
+
+func interact():
+	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
+		interacting = true;
+		#pick closest interactable
+		getClosestInteraction();
+		#set it as the interacting object
+		return;
+	if (!pressingInteractButton || canInteract == 0) && interacting: #or list of interactable objects is 
+		closestInteraction = null;
+		interacting = false;
+		return;
+
 func startClimbing(area):
 	if area != self:
 		return;
@@ -98,10 +140,13 @@ func endClimbing(area):
 
 func startInteracting(area):
 	print("can do things");
-	
+	canInteract += 1;
+	interactions.push_back(area);
 	
 func endInteracting(area):
 	print("can't do things anymore");
+	canInteract -= 1;
+	interactions.erase(area);
 
 func move(delta):
 	strafeDirection = strafeDirection.normalized();
