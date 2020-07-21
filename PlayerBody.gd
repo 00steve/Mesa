@@ -95,6 +95,14 @@ func endClimbing(area):
 	if movementState == 1:
 		movementState = 2;
 
+
+func startInteracting(area):
+	print("can do things");
+	
+	
+func endInteracting(area):
+	print("can't do things anymore");
+
 func move(delta):
 	strafeDirection = strafeDirection.normalized();
 

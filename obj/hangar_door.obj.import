@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/hangar_door.obj-e1f2fcc8038bd0d27a6451dd03ba953c.mesh"
+
+[deps]
+
+files=[ "res://.import/hangar_door.obj-e1f2fcc8038bd0d27a6451dd03ba953c.mesh" ]
+
+source_file="res://obj/hangar_door.obj"
+dest_files=[ "res://.import/hangar_door.obj-e1f2fcc8038bd0d27a6451dd03ba953c.mesh", "res://.import/hangar_door.obj-e1f2fcc8038bd0d27a6451dd03ba953c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
