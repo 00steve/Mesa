@@ -1,5 +1,6 @@
 extends KinematicBody
 
+signal start_press_button;
 #movement states
 # - 0 = free movement
 # - 1 = climbing
@@ -30,6 +31,7 @@ var canInteract;
 var interacting;
 var interactions;
 var closestInteraction;
+var newClosestInteraction;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -53,6 +55,7 @@ func _ready():
 	interactions = [];
 	interactions.resize(20);#this should be more than enough things ever. We'll see
 	closestInteraction = null;
+	newClosestInteraction = null;
 
 func _physics_process(delta):
 	interact();
@@ -107,24 +110,36 @@ func aim():
 		$PlayerHead.rotation = cameraAngle;
 
 func getClosestInteraction():
-	var dist = Vector2(10000,10000);
-	var id;
-	var pos = self.get_parent();
+	var dist = 9999999;
+	var pos = self.get_global_transform().origin;
 	closestInteraction = null;
 	for ob in interactions:
-		id = ob;
-
+		if(ob == null):
+			continue;
+		var ipos = ob.get_global_transform().origin;
+		var obdist = pos.distance_to(ipos);
+		if(dist > obdist):
+			newClosestInteraction = ob;
+			dist = obdist;
+	if(newClosestInteraction != closestInteraction):
+		print (newClosestInteraction.get_name());
+		if(closestInteraction != null):
+			self.disconnect("start_press_button",closestInteraction,"buttonPressed");
+			self.disconnect("end_press_button",closestInteraction,"endPressingButton");
+		closestInteraction = newClosestInteraction;
+		self.connect("start_press_button",closestInteraction,"startPressingButton");
+		self.connect("end_press_button",closestInteraction,"endPressingButton");
 func interact():
 	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
 		interacting = true;
-		#pick closest interactable
 		getClosestInteraction();
-		#set it as the interacting object
-		return;
+		emit_signal("start_press_button",self);
+		return; #nothing left to do after this, bitch
 	if (!pressingInteractButton || canInteract == 0) && interacting: #or list of interactable objects is 
 		closestInteraction = null;
 		interacting = false;
-		return;
+		print("stop pressing button");
+		emit_signal("end_press_button");
 
 func startClimbing(area):
 	if area != self:
@@ -136,7 +151,6 @@ func endClimbing(area):
 		return;
 	if movementState == 1:
 		movementState = 2;
-
 
 func startInteracting(area):
 	print("can do things");
