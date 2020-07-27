@@ -33,6 +33,7 @@ var interactions;
 var closestInteraction;
 var newClosestInteraction;
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	cameraAngle = Vector3(1.57,0,0);
@@ -113,6 +114,7 @@ func getClosestInteraction():
 	var dist = 9999999;
 	var pos = self.get_global_transform().origin;
 	closestInteraction = null;
+	newClosestInteraction = null;
 	for ob in interactions:
 		if(ob == null):
 			continue;
@@ -121,25 +123,31 @@ func getClosestInteraction():
 		if(dist > obdist):
 			newClosestInteraction = ob;
 			dist = obdist;
-	if(newClosestInteraction != closestInteraction):
-		print (newClosestInteraction.get_name());
+	if(newClosestInteraction != closestInteraction || closestInteraction == null && !interacting):
 		if(closestInteraction != null):
-			self.disconnect("start_press_button",closestInteraction,"buttonPressed");
+			print("disconnect old node");
+			self.disconnect("start_press_button",closestInteraction,"startPressingButton");
 			self.disconnect("end_press_button",closestInteraction,"endPressingButton");
 		closestInteraction = newClosestInteraction;
+		#print(closestInteraction.get_class());
 		self.connect("start_press_button",closestInteraction,"startPressingButton");
 		self.connect("end_press_button",closestInteraction,"endPressingButton");
+
 func interact():
-	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
-		interacting = true;
-		getClosestInteraction();
-		emit_signal("start_press_button",self);
-		return; #nothing left to do after this, bitch
+
 	if (!pressingInteractButton || canInteract == 0) && interacting: #or list of interactable objects is 
 		closestInteraction = null;
 		interacting = false;
-		print("stop pressing button");
-		emit_signal("end_press_button");
+		print("stopped pressing shit");
+		emit_signal("end_press_button",self);
+		return;
+		
+	getClosestInteraction();
+		
+	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
+		interacting = true;
+		emit_signal("start_press_button",self);
+		return; #nothing left to do after this, bitch
 
 func startClimbing(area):
 	if area != self:
@@ -153,18 +161,17 @@ func endClimbing(area):
 		movementState = 2;
 
 func startInteracting(area):
-	print("can do things");
+	print("player:start interacting");
 	canInteract += 1;
 	interactions.push_back(area);
-	
+
 func endInteracting(area):
-	print("can't do things anymore");
+	print("player:end interacting");
 	canInteract -= 1;
 	interactions.erase(area);
 
 func move(delta):
 	strafeDirection = strafeDirection.normalized();
-
 	match movementState:
 		0: 
 			#rotate movement direction by camera y angle
