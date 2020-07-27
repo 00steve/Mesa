@@ -59,9 +59,9 @@ func _ready():
 	newClosestInteraction = null;
 
 func _physics_process(delta):
-	interact();
-	aim();
-	move(delta);
+	Interact();
+	Aim();
+	Move(delta);
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -93,7 +93,7 @@ func _input(event):
 				movementState = 0;
 				gravity = -20;
 
-func aim():
+func Aim():
 	#smooth camera rotation
 	cameraRotateVelocity.y = (cameraRotateVelocity.y * (cameraRotateSmoothing-1) 
 		+ deg2rad(mouseMove.x) * mouseSensitivity) / cameraRotateSmoothing;
@@ -110,10 +110,9 @@ func aim():
 	if cameraRotateVelocity.x != 0 && cameraRotateVelocity.y != 0:
 		$PlayerHead.rotation = cameraAngle;
 
-func getClosestInteraction():
+func GetClosestInteraction():
 	var dist = 9999999;
 	var pos = self.get_global_transform().origin;
-	closestInteraction = null;
 	newClosestInteraction = null;
 	for ob in interactions:
 		if(ob == null):
@@ -123,54 +122,57 @@ func getClosestInteraction():
 		if(dist > obdist):
 			newClosestInteraction = ob;
 			dist = obdist;
-	if(newClosestInteraction != closestInteraction || closestInteraction == null && !interacting):
-		if(closestInteraction != null):
-			print("disconnect old node");
-			self.disconnect("start_press_button",closestInteraction,"startPressingButton");
-			self.disconnect("end_press_button",closestInteraction,"endPressingButton");
+	if(closestInteraction == newClosestInteraction):
+		return;
+	if(newClosestInteraction != closestInteraction && closestInteraction != null):
+		self.disconnect("start_press_button",closestInteraction,"StartPressingButton");
+		self.disconnect("end_press_button",closestInteraction,"EndPressingButton");
+		closestInteraction = null;
+		print("disconnect old node");
+	if(newClosestInteraction != null && closestInteraction != newClosestInteraction):
 		closestInteraction = newClosestInteraction;
-		#print(closestInteraction.get_class());
-		self.connect("start_press_button",closestInteraction,"startPressingButton");
-		self.connect("end_press_button",closestInteraction,"endPressingButton");
+		self.connect("start_press_button",closestInteraction,"StartPressingButton");
+		self.connect("end_press_button",closestInteraction,"EndPressingButton");
+		print("connect new node");
 
-func interact():
+func Interact():
 
 	if (!pressingInteractButton || canInteract == 0) && interacting: #or list of interactable objects is 
-		closestInteraction = null;
 		interacting = false;
 		print("stopped pressing shit");
 		emit_signal("end_press_button",self);
 		return;
 		
-	getClosestInteraction();
+	GetClosestInteraction();
 		
 	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
 		interacting = true;
+		print("started pressing shit");
 		emit_signal("start_press_button",self);
 		return; #nothing left to do after this, bitch
 
-func startClimbing(area):
+func StartClimbing(area):
 	if area != self:
 		return;
 	movementState = 1;
 
-func endClimbing(area):
+func EndClimbing(area):
 	if area != self:
 		return;
 	if movementState == 1:
 		movementState = 2;
 
-func startInteracting(area):
+func StartInteracting(area):
 	print("player:start interacting");
 	canInteract += 1;
 	interactions.push_back(area);
 
-func endInteracting(area):
+func EndInteracting(area):
 	print("player:end interacting");
 	canInteract -= 1;
 	interactions.erase(area);
 
-func move(delta):
+func Move(delta):
 	strafeDirection = strafeDirection.normalized();
 	match movementState:
 		0: 

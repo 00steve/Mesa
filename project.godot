@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Spatial",
+"class": "MesaSpatial",
+"language": "GDScript",
+"path": "res://iface/MesaSpatial.gd"
+} ]
 _global_script_class_icons={
-
+"MesaSpatial": ""
 }
 
 [application]

@@ -65,8 +65,8 @@ func _ready():
 			continue;
 		if(objectType == "Input"):
 			var area = child.get_node("Area");
-			area.connect("start_interacting",playerBody,"startInteracting");
-			area.connect("end_interacting",playerBody,"endInteracting");
+			area.connect("start_interacting",playerBody,"StartInteracting");
+			area.connect("end_interacting",playerBody,"EndInteracting");
 			inputs.append(child);
 			continue;
 		if(objectType == "Device"):

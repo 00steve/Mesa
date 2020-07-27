@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://MSwitchArea.gd" type="Script" id=1]
+[ext_resource path="res://MSwitch.gd" type="Script" id=2]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.5
@@ -12,6 +13,7 @@ albedo_color = Color( 0.584314, 0.584314, 0.584314, 1 )
 albedo_color = Color( 1, 0, 0, 1 )
 
 [node name="MSwitch" type="Spatial"]
+script = ExtResource( 2 )
 
 [node name="Area" type="Area" parent="."]
 script = ExtResource( 1 )
