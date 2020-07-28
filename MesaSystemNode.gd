@@ -6,7 +6,7 @@ class_name MesaSystemNode
 # var b = "text"
 signal start_interacting;
 signal end_interacting;
-signal interact_event(sender);
+signal interact_event(interaction);
 signal relay_interaction;
 
 var inputs;
@@ -48,7 +48,6 @@ func _ready():
 	#look for any children with the type "Input"
 	#look to see if they have an area.
 	var playerBody = self.get_parent().get_node("Environment").get("playerBody");
-	playerBody.connect("interact_event",self,"RelayPlayerInteraction");
 	
 	#look through the children to see if they should be given specifc 
 	#connections or other things based on the type of thing they are
@@ -69,7 +68,7 @@ func _ready():
 			var area = child.get_node("Area");
 			area.connect("start_interacting",playerBody,"StartInteracting");
 			area.connect("end_interacting",playerBody,"EndInteracting");
-			area.connect("input_event",self,"OnInput");
+			child.connect("system_event",self,"OnInput");
 			inputs.append(child);
 			continue;
 		if(objectType == "Device"):
@@ -80,6 +79,13 @@ func _ready():
 
 
 	
-func RelayPlayerInteraction(player):
+#func RelayPlayerInteraction(player):
 	#print("relay player interaction");
-	emit_signal("interact_event",player);
+#	emit_signal("interact_event",player);
+	
+#func RelayInput(interaction):
+	#emit_signal("interact_event",interaction);
+	
+func OnInput(interaction):
+	print("system input from " + str(MesaInteraction.InputType.keys()[interaction.inputType]));
+	emit_signal("interact_event",interaction);

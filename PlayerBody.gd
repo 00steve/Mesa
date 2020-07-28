@@ -2,10 +2,12 @@ extends KinematicBody
 
 
 onready var Interaction = preload("res://Interaction.gd");
+onready var MesaInput = preload("res://MesaInput.gd");
 
 signal start_press_button;
 signal end_press_button;
-signal interact_event(sender);
+signal interact_event(data);
+
 #movement states
 # - 0 = free movement
 # - 1 = climbing
@@ -132,19 +134,15 @@ func GetClosestInteraction():
 	if(closestInteraction == newClosestInteraction):
 		return;
 	if(newClosestInteraction != closestInteraction && closestInteraction != null):
-		self.disconnect("start_press_button",closestInteraction.get_parent(),"StartPressingButton");
-		self.disconnect("end_press_button",closestInteraction.get_parent(),"EndPressingButton");
+		self.disconnect("interact_event",closestInteraction.get_parent(),"OnInput");
 		closestInteraction = null;
-		#print("disconnect old node");
 	if(newClosestInteraction != null && closestInteraction != newClosestInteraction):
 		closestInteraction = newClosestInteraction;
-		self.connect("start_press_button",closestInteraction.get_parent(),"StartPressingButton");
-		self.connect("end_press_button",closestInteraction.get_parent(),"EndPressingButton");
+		self.connect("interact_event",closestInteraction.get_parent(),"OnInput");
 
 func Interact():
 	if (!pressingInteractButton || canInteract == 0) && interacting: #or list of interactable objects is 
 		interacting = false;
-		emit_signal("end_press_button",self);
 		emit_signal("interact_event",self);
 		return;
 		
@@ -152,7 +150,6 @@ func Interact():
 		
 	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
 		interacting = true;
-		emit_signal("start_press_button",self);
 		emit_signal("interact_event",self);
 		return; #nothing left to do after this, bitch
 
@@ -168,12 +165,10 @@ func EndClimbing(area):
 		movementState = 2;
 
 func StartInteracting(area):
-	#print("player:start interacting");
 	canInteract += 1;
 	interactions.push_back(area);
 
 func EndInteracting(area):
-	#print("player:end interacting");
 	canInteract -= 1;
 	interactions.erase(area);
 

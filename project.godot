@@ -10,7 +10,12 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
-"class": "Interaction",
+"class": "MesaInput",
+"language": "GDScript",
+"path": "res://MesaInput.gd"
+}, {
+"base": "Reference",
+"class": "MesaInteraction",
 "language": "GDScript",
 "path": "res://Interaction.gd"
 }, {
@@ -30,7 +35,8 @@ _global_script_classes=[ {
 "path": "res://MesaSystemNode.gd"
 } ]
 _global_script_class_icons={
-"Interaction": "",
+"MesaInput": "",
+"MesaInteraction": "",
 "MesaOmniLight": "",
 "MesaSpatial": "",
 "MesaSystemNode": ""

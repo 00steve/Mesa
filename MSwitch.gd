@@ -1,5 +1,6 @@
 extends "iface/MesaSpatial.gd"
 
+onready var Interaction = preload("res://Interaction.gd");
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -7,7 +8,7 @@ extends "iface/MesaSpatial.gd"
 
 signal start_press_button;
 signal end_press_button;
-signal m_switch;
+signal system_event;
 var hia;
 
 # Called when the node enters the scene tree for the first time.
@@ -19,16 +20,17 @@ func ConnectActor(actor):
 	
 func DisconnectActor(actor):
 	pass;
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-func StartPressingButton(player):
-	print("button: start pressing button");
-	$Area.emit_signal("input_event");
-	#InteractionArea().emit_signal("m_switch",1);
 
-func EndPressingButton(player):
-	print("button: stop pressing button");
-	#InteractionArea().emit_signal("m_switch",0);
+	
+func OnInput(actor):
+	var pressed = Input.is_action_pressed("move_interact");
+	var i = MesaInteraction.new();
+	i.actor = actor;
+	i.inputType = MesaInteraction.InputType.MSwitch;
+	if pressed:
+		i.inputValue = MesaInteraction.InputMSwitchValue.Push;
+	else:
+		i.inputValue = MesaInteraction.InputMSwitchValue.Release;
+	emit_signal("system_event",i);
 
 

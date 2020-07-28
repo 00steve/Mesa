@@ -1,5 +1,5 @@
 
-class_name Interaction
+class_name MesaInteraction
 
 enum InputType {NA,MSwitch,LSwitch,Linear,Keyboard,Keypad};
 enum InputNAValue {NA};
