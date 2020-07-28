@@ -45,5 +45,8 @@ script = ExtResource( 9 )
 [node name="MSwitchInput" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, -4 )
 
+[node name="MSwitchInput3" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, -5 )
+
 [node name="MSwitchInput2" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
 transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.78495, 2.46008, -9.55803 )
