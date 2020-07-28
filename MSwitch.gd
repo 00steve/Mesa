@@ -7,7 +7,7 @@ extends "iface/MesaSpatial.gd"
 
 signal start_press_button;
 signal end_press_button;
-signal light_control;
+signal m_switch;
 var hia;
 
 # Called when the node enters the scene tree for the first time.
@@ -24,10 +24,10 @@ func DisconnectActor(actor):
 #	pass
 func StartPressingButton(area):
 	print("start pressing button");
-	InteractionArea().emit_signal("light_control",1);
+	#InteractionArea().emit_signal("m_switch",1);
 
 func EndPressingButton(area):
 	print("stop pressing button");
-	InteractionArea().emit_signal("light_control",0);
+	#InteractionArea().emit_signal("m_switch",0);
 
 

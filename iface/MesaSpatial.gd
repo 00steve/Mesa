@@ -19,6 +19,7 @@ func _ready():
 			print("Error: " + lastError);
 		break; #assuming there is only one object called Area
 
+	
 
 func InteractionArea():
 	return interactionArea;

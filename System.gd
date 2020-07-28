@@ -6,7 +6,8 @@ extends Spatial
 # var b = "text"
 signal start_interacting;
 signal end_interacting;
-
+signal interact_event(sender);
+signal relay_interaction;
 
 var inputs;
 var devices;
@@ -47,6 +48,7 @@ func _ready():
 	#look for any children with the type "Input"
 	#look to see if they have an area.
 	var playerBody = self.get_parent().get_node("Environment").get("playerBody");
+	playerBody.connect("interact_event",self,"RelayPlayerInteraction");
 	
 	#look through the children to see if they should be given specifc 
 	#connections or other things based on the type of thing they are
@@ -70,39 +72,17 @@ func _ready():
 			inputs.append(child);
 			continue;
 		if(objectType == "Device"):
-			devices.append(child);
-	#add anything with the prefix "Light" to the group that should be controlled by any inputs
-#	for device in self.get_children():
-#		if device.get_name().left(5) != "Device":
-#			continue;
-#		print("light found - " + device.get_name());
-#		devices.append(device);
-
-	#loop through each of the children of the light
-	#look for any objects that start with "Input", to set them up to interact with the 
-	#player, or any other NPCs that are capible of doing things and interacting with the world.
-#	var count = 0;
-#	var area;
-#	for input in self.get_children():
-#		if input.get_name() != "Input":
-#			continue;
-#		area = input.get_node("Area");
-#		if area == null:
-#			continue;
-#		print(area.get_class() + " is a light area");
-#		area.connect("start_interacting",playerBody,"startInteracting");
-#		area.connect("end_interacting",playerBody,"endInteracting");
-#		#area.connect("light_control",self,"onLightControl");
-#		
-#		#add a connector to each light to issue commands when there needs to be something
-#		#that happens from the input to the lights
-#		for device in devices:
-#			if(device == null):
-#				continue;
-#			device.connect("light_control",area,"onLightControl");
-
+			var device = child;
+			#device.connect("interact_event",self,"Interaction");
+			self.connect("interact_event",device,"Interaction");
+			devices.append(device);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 func onLightControl(action):
 	print("do shit with the lights:" + action as String);
+	
+	
+func RelayPlayerInteraction(player):
+	print("relay player interaction");
+	emit_signal("interact_event",player);

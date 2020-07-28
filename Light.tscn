@@ -11,6 +11,5 @@ script = ExtResource( 2 )
 [node name="Lightbulb" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.192792, 0.963474, 0.124939 )
 shadow_enabled = true
-shadow_color = Color( 1, 0, 0, 1 )
-shadow_bias = 5.54
-shadow_contact = 3.96
+shadow_bias = 0.02
+shadow_contact = 0.18

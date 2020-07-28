@@ -16,8 +16,8 @@ func _ready():
 	var area;
 	for node in self.get_parent().get_node("Ladders").get_children():
 		area = node.get_node("LadderArea");
-		area.connect("start_climbing",playerBody,"startClimbing");
-		area.connect("end_climbing",playerBody,"endClimbing");
+		area.connect("start_climbing",playerBody,"StartClimbing");
+		area.connect("end_climbing",playerBody,"EndClimbing");
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

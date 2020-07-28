@@ -1,6 +1,7 @@
 extends KinematicBody
 
 signal start_press_button;
+signal interact_event(sender);
 #movement states
 # - 0 = free movement
 # - 1 = climbing
@@ -57,6 +58,9 @@ func _ready():
 	interactions.resize(20);#this should be more than enough things ever. We'll see
 	closestInteraction = null;
 	newClosestInteraction = null;
+	
+	
+	#self.connect("interact_event",self,"DoThings");
 
 func _physics_process(delta):
 	Interact();
@@ -93,6 +97,10 @@ func _input(event):
 				movementState = 0;
 				gravity = -20;
 
+func DoThings(sender):
+	print("do shit!");
+
+
 func Aim():
 	#smooth camera rotation
 	cameraRotateVelocity.y = (cameraRotateVelocity.y * (cameraRotateSmoothing-1) 
@@ -125,30 +133,32 @@ func GetClosestInteraction():
 	if(closestInteraction == newClosestInteraction):
 		return;
 	if(newClosestInteraction != closestInteraction && closestInteraction != null):
-		self.disconnect("start_press_button",closestInteraction,"StartPressingButton");
-		self.disconnect("end_press_button",closestInteraction,"EndPressingButton");
+		self.disconnect("start_press_button",closestInteraction.get_parent(),"StartPressingButton");
+		self.disconnect("end_press_button",closestInteraction.get_parent(),"EndPressingButton");
 		closestInteraction = null;
-		print("disconnect old node");
+		#print("disconnect old node");
 	if(newClosestInteraction != null && closestInteraction != newClosestInteraction):
 		closestInteraction = newClosestInteraction;
-		self.connect("start_press_button",closestInteraction,"StartPressingButton");
-		self.connect("end_press_button",closestInteraction,"EndPressingButton");
-		print("connect new node");
+		self.connect("start_press_button",closestInteraction.get_parent(),"StartPressingButton");
+		self.connect("end_press_button",closestInteraction.get_parent(),"EndPressingButton");
+		#print("connect new node");
 
 func Interact():
 
 	if (!pressingInteractButton || canInteract == 0) && interacting: #or list of interactable objects is 
 		interacting = false;
+		#emit_signal("end_press_button",self);
+		emit_signal("interact_event",self);
 		print("stopped pressing shit");
-		emit_signal("end_press_button",self);
 		return;
 		
 	GetClosestInteraction();
 		
 	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
 		interacting = true;
+		#emit_signal("start_press_button",self);
+		emit_signal("interact_event",self);
 		print("started pressing shit");
-		emit_signal("start_press_button",self);
 		return; #nothing left to do after this, bitch
 
 func StartClimbing(area):
@@ -163,12 +173,12 @@ func EndClimbing(area):
 		movementState = 2;
 
 func StartInteracting(area):
-	print("player:start interacting");
+	#print("player:start interacting");
 	canInteract += 1;
 	interactions.push_back(area);
 
 func EndInteracting(area):
-	print("player:end interacting");
+	#print("player:end interacting");
 	canInteract -= 1;
 	interactions.erase(area);
 
