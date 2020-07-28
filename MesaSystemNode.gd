@@ -68,6 +68,9 @@ func _ready():
 			var area = child.get_node("Area");
 			area.connect("start_interacting",playerBody,"StartInteracting");
 			area.connect("end_interacting",playerBody,"EndInteracting");
+			#call back to the system when system_event is emitted, this will
+			#call OnInput(Interaction i), the input supplying the interaction
+			#object to OnInput() should populate it however it makes sense.
 			child.connect("system_event",self,"OnInput");
 			inputs.append(child);
 			continue;
