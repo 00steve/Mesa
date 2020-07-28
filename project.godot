@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Interaction",
+"language": "GDScript",
+"path": "res://Interaction.gd"
+}, {
 "base": "OmniLight",
 "class": "MesaOmniLight",
 "language": "GDScript",
@@ -18,10 +23,17 @@ _global_script_classes=[ {
 "class": "MesaSpatial",
 "language": "GDScript",
 "path": "res://iface/MesaSpatial.gd"
+}, {
+"base": "Node",
+"class": "MesaSystemNode",
+"language": "GDScript",
+"path": "res://MesaSystemNode.gd"
 } ]
 _global_script_class_icons={
+"Interaction": "",
 "MesaOmniLight": "",
-"MesaSpatial": ""
+"MesaSpatial": "",
+"MesaSystemNode": ""
 }
 
 [application]

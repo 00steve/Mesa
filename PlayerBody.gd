@@ -1,6 +1,10 @@
 extends KinematicBody
 
+
+onready var Interaction = preload("res://Interaction.gd");
+
 signal start_press_button;
+signal end_press_button;
 signal interact_event(sender);
 #movement states
 # - 0 = free movement
@@ -60,8 +64,6 @@ func _ready():
 	newClosestInteraction = null;
 	
 	
-	#self.connect("interact_event",self,"DoThings");
-
 func _physics_process(delta):
 	Interact();
 	Aim();
@@ -96,9 +98,6 @@ func _input(event):
 					+ -sin(cameraAngle.y)*strafeDirection.x)*5;
 				movementState = 0;
 				gravity = -20;
-
-func DoThings(sender):
-	print("do shit!");
 
 
 func Aim():
@@ -141,24 +140,20 @@ func GetClosestInteraction():
 		closestInteraction = newClosestInteraction;
 		self.connect("start_press_button",closestInteraction.get_parent(),"StartPressingButton");
 		self.connect("end_press_button",closestInteraction.get_parent(),"EndPressingButton");
-		#print("connect new node");
 
 func Interact():
-
 	if (!pressingInteractButton || canInteract == 0) && interacting: #or list of interactable objects is 
 		interacting = false;
-		#emit_signal("end_press_button",self);
+		emit_signal("end_press_button",self);
 		emit_signal("interact_event",self);
-		print("stopped pressing shit");
 		return;
 		
 	GetClosestInteraction();
 		
 	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
 		interacting = true;
-		#emit_signal("start_press_button",self);
+		emit_signal("start_press_button",self);
 		emit_signal("interact_event",self);
-		print("started pressing shit");
 		return; #nothing left to do after this, bitch
 
 func StartClimbing(area):

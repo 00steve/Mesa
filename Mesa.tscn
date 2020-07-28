@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://TheHangar.tscn" type="PackedScene" id=2]
@@ -6,14 +6,15 @@
 [ext_resource path="res://Ladder.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Ladders.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Hangar1.gd" type="Script" id=6]
-[ext_resource path="res://Light.tscn" type="PackedScene" id=7]
+[ext_resource path="res://MSwitch.tscn" type="PackedScene" id=7]
 [ext_resource path="res://System.tscn" type="PackedScene" id=8]
+[ext_resource path="res://MesaOmniLight.gd" type="Script" id=9]
 
 [node name="Mesa" type="Spatial"]
 script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 3, -41 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 3, -32 )
 
 [node name="Hangar1" type="Spatial" parent="."]
 
@@ -29,10 +30,20 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 4, -37 )
 [node name="Ladder2" parent="Hangar1/Ladders" instance=ExtResource( 4 )]
 transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -31, 4, -37 )
 
-[node name="Objects" type="Node" parent="Hangar1"]
-
-[node name="Light" parent="Hangar1/Objects" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 4, -40 )
-
 [node name="LightSystem" parent="Hangar1" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 3, -31.7431 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 4, -31.7431 )
+
+[node name="MOL1Device" type="OmniLight" parent="Hangar1/LightSystem"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5 )
+light_color = Color( 0.0431373, 0.101961, 0.996078, 1 )
+light_energy = 14.64
+light_indirect_energy = 2.36
+shadow_enabled = true
+omni_range = 7.6
+script = ExtResource( 9 )
+
+[node name="MSwitchInput" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, -4 )
+
+[node name="MSwitchInput2" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.78495, 2.46008, -9.55803 )

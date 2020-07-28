@@ -22,12 +22,13 @@ func DisconnectActor(actor):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-func StartPressingButton(area):
-	print("start pressing button");
+func StartPressingButton(player):
+	print("button: start pressing button");
+	$Area.emit_signal("input_event");
 	#InteractionArea().emit_signal("m_switch",1);
 
-func EndPressingButton(area):
-	print("stop pressing button");
+func EndPressingButton(player):
+	print("button: stop pressing button");
 	#InteractionArea().emit_signal("m_switch",0);
 
 

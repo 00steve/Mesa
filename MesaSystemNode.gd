@@ -1,5 +1,5 @@
-extends Spatial
-
+extends Node
+class_name MesaSystemNode
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -69,6 +69,7 @@ func _ready():
 			var area = child.get_node("Area");
 			area.connect("start_interacting",playerBody,"StartInteracting");
 			area.connect("end_interacting",playerBody,"EndInteracting");
+			area.connect("input_event",self,"OnInput");
 			inputs.append(child);
 			continue;
 		if(objectType == "Device"):
@@ -77,12 +78,8 @@ func _ready():
 			self.connect("interact_event",device,"Interaction");
 			devices.append(device);
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-func onLightControl(action):
-	print("do shit with the lights:" + action as String);
-	
+
 	
 func RelayPlayerInteraction(player):
-	print("relay player interaction");
+	#print("relay player interaction");
 	emit_signal("interact_event",player);

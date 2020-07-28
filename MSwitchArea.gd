@@ -10,16 +10,18 @@ signal end_interacting;
 func _ready():
 	pass;
 
-	
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 	
 func SignalStartInteracting(area):
 	print("start interacting probably");
-	emit_signal("start_interacting",area);
+	emit_signal("start_interacting",self);
 
 func SignalEndInteracting(area):
 	print("end interacting probably");
-	emit_signal("end_interacting",area);
+	emit_signal("end_interacting",self);
+
+
+func StartPressingButton(player):
+	print("player pressing action button");
