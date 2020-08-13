@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://TheHangar.tscn" type="PackedScene" id=2]
@@ -9,12 +9,13 @@
 [ext_resource path="res://MSwitch.tscn" type="PackedScene" id=7]
 [ext_resource path="res://System.tscn" type="PackedScene" id=8]
 [ext_resource path="res://MesaOmniLight.gd" type="Script" id=9]
+[ext_resource path="res://Infirmary.tscn" type="PackedScene" id=10]
 
 [node name="Mesa" type="Spatial"]
 script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 3, -32 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 7.26421, -32 )
 
 [node name="Hangar1" type="Spatial" parent="."]
 
@@ -50,3 +51,6 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, -
 
 [node name="MSwitchInput2" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
 transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.78495, 2.46008, -9.55803 )
+
+[node name="Infirmary" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 7, -30 )
