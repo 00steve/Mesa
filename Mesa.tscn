@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://TheHangar.tscn" type="PackedScene" id=2]
@@ -9,7 +9,8 @@
 [ext_resource path="res://MSwitch.tscn" type="PackedScene" id=7]
 [ext_resource path="res://System.tscn" type="PackedScene" id=8]
 [ext_resource path="res://MesaOmniLight.gd" type="Script" id=9]
-[ext_resource path="res://Infirmary.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scene/infirmary.escn" type="PackedScene" id=10]
+[ext_resource path="res://obj/coffee_table_01.tscn" type="PackedScene" id=11]
 
 [node name="Mesa" type="Spatial"]
 script = ExtResource( 3 )
@@ -18,9 +19,11 @@ script = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 7.26421, -32 )
 
 [node name="Hangar1" type="Spatial" parent="."]
+visible = false
 
 [node name="Environment" parent="Hangar1" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1, 0 )
+visible = false
 script = ExtResource( 6 )
 
 [node name="Ladders" parent="Hangar1" instance=ExtResource( 5 )]
@@ -33,6 +36,7 @@ transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -
 
 [node name="LightSystem" parent="Hangar1" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 4, -31.7431 )
+visible = false
 
 [node name="MOL1Device" type="OmniLight" parent="Hangar1/LightSystem"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5 )
@@ -52,5 +56,11 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, -
 [node name="MSwitchInput2" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
 transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.78495, 2.46008, -9.55803 )
 
-[node name="Infirmary" parent="." instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 7, -30 )
+[node name="infirmary" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0527, 5.87572, -28.6856 )
+
+[node name="coffee_table_01" parent="infirmary" instance=ExtResource( 11 )]
+transform = Transform( 0.602762, 0, 0.797921, 0, 1, 0, -0.797921, 0, 0.602762, -1.00478, 0.91695, 1.33011 )
+
+[node name="coffee_table_02" parent="infirmary" instance=ExtResource( 11 )]
+transform = Transform( 0.221193, -0.388124, 0.894669, 0.868813, 0.49514, 1.47563e-08, -0.442987, 0.7773, 0.446729, 1.06928, 1.6511, -2.85024 )

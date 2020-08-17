@@ -13,7 +13,7 @@ signal interact_event(data);
 # - 1 = climbing
 
 
-var mouseSensitivity = .3;
+var mouseSensitivity = .25;
 
 #camera input
 var cameraAngle;
@@ -25,6 +25,7 @@ var mouseMove;
 var speed;
 var strafeDirection;
 var moveDirection;
+var jumping;
 
 #movement physics
 var velocity;
@@ -55,6 +56,7 @@ func _ready():
 	isOnFloor = false;
 	climbSpeed = 2;
 	movementState = 0;
+	jumping = false;
 	
 	#interaction variables
 	pressingInteractButton = false;
@@ -88,10 +90,11 @@ func _input(event):
 	pressingInteractButton = Input.is_action_pressed("move_interact");
 
 	if Input.is_action_pressed("move_jump"):
+		jumping = true;
 		match movementState:
 			0: 
 				if isOnFloor:
-					velocity.y = 10;
+					velocity.y = 8.5;
 			1:
 				print("jump from the ladder");
 				velocity = Vector3(sin(cameraAngle.y)*strafeDirection.z
@@ -99,8 +102,9 @@ func _input(event):
 					cos(cameraAngle.y)*strafeDirection.z
 					+ -sin(cameraAngle.y)*strafeDirection.x)*5;
 				movementState = 0;
-				gravity = -20;
-
+				gravity = -17;
+	else:
+		jumping = false;
 
 func Aim():
 	#smooth camera rotation
@@ -189,6 +193,8 @@ func Move(delta):
 			if isOnFloor:
 				velocity.x = moveDirection.x;
 				velocity.z = moveDirection.z;
+				if !jumping && isOnFloor:
+					velocity.y = velocity.y/10;
 		1:#climbing
 			gravity = 0;
 			moveDirection = Vector3(0,cos(-cameraAngle.x)*strafeDirection.z*climbSpeed,0);
@@ -214,6 +220,7 @@ func Move(delta):
 			
 	#update the velocity of the player. Always update the velocity based on 
 	#gravity. Only update the x/z velocities if the player is on the floor.
-	velocity = move_and_slide(velocity,Vector3(0,1,0))
+	#velocity = move_and_slide(velocity,Vector3(0,1,0))
+	velocity = move_and_slide(velocity,Vector3(0,1,0),true, 4,1.6,false);
 	#at the end of everything, check to see if the player is on the floor
-	isOnFloor = is_on_floor()
+	isOnFloor = is_on_floor();
