@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/MarbleBase0083_1_download600.jpg-3d43dc82c7587004634b4be962ca1ee0.s3tc.stex"
-path.etc2="res://.import/MarbleBase0083_1_download600.jpg-3d43dc82c7587004634b4be962ca1ee0.etc2.stex"
+path.s3tc="res://.import/concrete_02.jpg-a48757653fa24d30f7fdbe525cda5394.s3tc.stex"
+path.etc2="res://.import/concrete_02.jpg-a48757653fa24d30f7fdbe525cda5394.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://scene/MarbleBase0083_1_download600.jpg"
-dest_files=[ "res://.import/MarbleBase0083_1_download600.jpg-3d43dc82c7587004634b4be962ca1ee0.s3tc.stex", "res://.import/MarbleBase0083_1_download600.jpg-3d43dc82c7587004634b4be962ca1ee0.etc2.stex" ]
+source_file="res://scene/concrete_02.jpg"
+dest_files=[ "res://.import/concrete_02.jpg-a48757653fa24d30f7fdbe525cda5394.s3tc.stex", "res://.import/concrete_02.jpg-a48757653fa24d30f7fdbe525cda5394.etc2.stex" ]
 
 [params]
 

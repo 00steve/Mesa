@@ -94,7 +94,7 @@ func _input(event):
 		match movementState:
 			0: 
 				if isOnFloor:
-					velocity.y = 8.5;
+					velocity.y = 6;
 			1:
 				print("jump from the ladder");
 				velocity = Vector3(sin(cameraAngle.y)*strafeDirection.z

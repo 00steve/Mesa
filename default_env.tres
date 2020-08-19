@@ -5,19 +5,21 @@
 [resource]
 background_sky = SubResource( 1 )
 background_energy = 0.0
-ambient_light_energy = 0.0
-ambient_light_sky_contribution = 0.0
+ambient_light_color = Color( 0.282353, 0.501961, 0.623529, 1 )
+ambient_light_energy = 0.02
+ambient_light_sky_contribution = 0.01
 fog_color = Color( 0, 0, 0, 1 )
 ssao_enabled = true
 ssao_radius = 1.18
 ssao_intensity = 3.17
 ssao_radius2 = 4.34
+ssao_intensity2 = 4.25
 ssao_bias = 0.001
-ssao_light_affect = 0.13
+ssao_light_affect = 0.27
 ssao_ao_channel_affect = 0.14
 ssao_quality = 0
 ssao_blur = 2
-ssao_edge_sharpness = 1.29
+ssao_edge_sharpness = 0.75
 dof_blur_far_enabled = true
 dof_blur_far_distance = 159.49
 dof_blur_far_transition = 31.71
