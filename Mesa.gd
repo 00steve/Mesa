@@ -1,6 +1,7 @@
 extends Spatial
 
-
+onready var MesaComponentClass = preload("res://util/MesaComponent.gd")
+onready var MesaLightClass = preload("res://util/MesaLight.gd")
 #preload("System.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -36,6 +37,9 @@ func SetupSceneFromBlender(sceneName):
 
 
 func SetupSceneSystems(sceneNode):
+	var systems = {};
+	var components = [];
+	
 	var childName;
 	var block;
 	var blockIndexEnd;
@@ -60,11 +64,10 @@ func SetupSceneSystems(sceneNode):
 					blockIndexEnd = childName.find("_");
 					block = childName.substr(0,blockIndexEnd);
 					childName = childName.substr(blockIndexEnd+1);
-					if(blockIndexEnd == -1):
-						break;
-					if block != "System":
+					if(blockIndexEnd == -1 || block != "System"):
 						break;
 					nextState = 1;
+					
 				#check if valid node is a system or a component 
 				#of a system.
 				1: 
@@ -75,14 +78,17 @@ func SetupSceneSystems(sceneNode):
 						nextState = 10;
 					else:
 						nextState = 20;
+
 				#if node is a System, setup the system
 				10:
-					systemName = block + "System";
+					systemName = block;
 					print(" - is System[" + systemName + "]");
 					var sys = MesaSystemNode.new();
-					sys.set_name(systemName);
+					sys.set_name(systemName + "System");
 					sceneNode.add_child(sys);
+					systems[systemName] = sys;
 					break;
+					
 				#if node is a component of a system, keep 
 				#digging to determine which type of component 
 				#it should be created as
@@ -98,18 +104,38 @@ func SetupSceneSystems(sceneNode):
 						block = childName.substr(0,blockIndexEnd);
 						childName = childName.substr(blockIndexEnd+1);
 				21:
-					
-					print("\t - is a " + block + " of system[" + systemName + "] ->" + childName);
 					componentType = block;
 					componentName = childName;
 					blockIndexEnd = childName.find("_");
 					block = childName.substr(0,blockIndexEnd);
 					childName = childName.substr(blockIndexEnd+1);
-						
-					
-					print("\t - named " + childName);
+					var component = MesaComponent.new();
+					component.SystemName = systemName;
+					component.ComponentType = componentType;
+					component.ComponentName = componentName;
+					component.ComponentNode = child;
+					components.push_back(component);
 					break;
 				25:
 					print("\t - invalid component type");
 					break;
 			state = nextState;
+	
+	#add components to each system
+	for component in components:
+		#validate that it is a valid system, based on the name
+		systemName = component.SystemName;
+		if(!systems.has(systemName)):
+			print("system " + component.SystemName + " doesn't exist - skip");
+			break;
+		var system = systems[systemName];
+		#make sure the component is a valid type
+		#print("child(" + component.ComponentNode.get_class() + ")");
+		match component.ComponentType:
+			"MSwitch":
+				print(" - is MSwitch");
+			"MesaLight":
+				print(" - is MesaLight");
+				var node = MesaLight.new(component.ComponentNode);
+				system.add_child(node);
+		

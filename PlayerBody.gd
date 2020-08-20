@@ -1,7 +1,7 @@
 extends KinematicBody
 
 
-onready var Interaction = preload("res://Interaction.gd");
+onready var Interaction = preload("res://util/Interaction.gd");
 onready var MesaInput = preload("res://MesaInput.gd");
 
 signal start_press_button;

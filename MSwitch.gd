@@ -1,6 +1,6 @@
 extends "iface/MesaSpatial.gd"
 
-onready var Interaction = preload("res://Interaction.gd");
+onready var Interaction = preload("res://util/Interaction.gd");
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -17,13 +17,8 @@ var bzpush;
 func _ready():
 	bzpos = $MSwitchCase/MSwitchButton.translation.z;
 	bzpush = 0;
-func ConnectActor(actor):
-	pass;
-	
-func DisconnectActor(actor):
-	pass;
 
-	
+
 func OnInput(actor):
 	var pressed = Input.is_action_pressed("move_interact");
 	var i = MesaInteraction.new();

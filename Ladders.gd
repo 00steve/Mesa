@@ -10,7 +10,7 @@ extends Node
 #it tells the ladeers which objects in the game to respond to.
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var playerBody = self.get_parent().get_parent().get_node("Environment").get("playerBody");
+	var playerBody = self.get_parent().get_parent().get_node("Player");
 	#loop through each of the ladders in the ladder group
 	var count = 0;
 	var area;

@@ -47,7 +47,7 @@ func _ready():
 	
 	#look for any children with the type "Input"
 	#look to see if they have an area.
-	var playerBody = self.get_parent().get_parent().get_node("Environment").get("playerBody");
+	var playerBody = self.get_parent().get_parent().get_node("Player");
 	if(!playerBody):
 		print("INVALID SYSTEM NODE : COULD NOT GET playerBody from Environment Node");
 		return;
