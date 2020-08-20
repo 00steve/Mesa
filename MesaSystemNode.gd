@@ -43,7 +43,7 @@ func _ready():
 		print("Not a valid system");
 		return;
 	systemType = systemType.substr(0,systemNameIndex);
-	print("this system is a " + systemType + " system");
+	#print("this system is a " + systemType + " system");
 	
 	#look for any children with the type "Input"
 	#look to see if they have an area.
@@ -58,7 +58,7 @@ func _ready():
 			if(childTypeIndex == -1):
 				continue;
 			objectType = childName.substr(childTypeIndex,childType.length());
-			print("found child of type: " + objectType);
+			#print("found child of type: " + objectType);
 			break;
 		#depending on the type
 		if(objectType == null):

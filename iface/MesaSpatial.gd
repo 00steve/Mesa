@@ -6,7 +6,6 @@ var interactionArea = null;
 var lastError = -1;
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("MesaSpacial _ready()");
 	for child in get_children():
 		if(child.get_name() != "Area"):
 			continue;
