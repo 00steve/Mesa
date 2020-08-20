@@ -10,7 +10,7 @@ var playerBody;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#get player objects
-	playerNode = get_parent().get_parent().get_node("Player");
+	playerNode = get_parent().get_node("Player");
 	if(!playerNode):
 		print("Player node not found");
 	playerBody = playerNode.get_node("PlayerBody");

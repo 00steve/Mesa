@@ -7,7 +7,7 @@
 [ext_resource path="res://Ladders.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Hangar1.gd" type="Script" id=6]
 [ext_resource path="res://MSwitch.tscn" type="PackedScene" id=7]
-[ext_resource path="res://System.tscn" type="PackedScene" id=8]
+[ext_resource path="res://util/System.tscn" type="PackedScene" id=8]
 [ext_resource path="res://MesaOmniLight.gd" type="Script" id=9]
 [ext_resource path="res://scene/infirmary.escn" type="PackedScene" id=10]
 [ext_resource path="res://obj/coffee_table_01.tscn" type="PackedScene" id=11]
@@ -20,11 +20,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 7.26421, -32 )
 
 [node name="Hangar1" type="Spatial" parent="."]
 visible = false
-
-[node name="Environment" parent="Hangar1" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1, 0 )
-visible = false
-script = ExtResource( 6 )
 
 [node name="Ladders" parent="Hangar1" instance=ExtResource( 5 )]
 
@@ -64,3 +59,8 @@ transform = Transform( 0.602762, 0, 0.797921, 0, 1, 0, -0.797921, 0, 0.602762, -
 
 [node name="coffee_table_02" parent="infirmary" instance=ExtResource( 11 )]
 transform = Transform( 0.221193, -0.388124, 0.894669, 0.868813, 0.49514, 1.47563e-08, -0.442987, 0.7773, 0.446729, 1.06928, 1.6511, -2.85024 )
+
+[node name="Environment" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1, 0 )
+visible = false
+script = ExtResource( 6 )

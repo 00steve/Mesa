@@ -43,12 +43,15 @@ func _ready():
 		print("Not a valid system");
 		return;
 	systemType = systemType.substr(0,systemNameIndex);
-	#print("this system is a " + systemType + " system");
+	print("this system is a " + systemType + " system");
 	
 	#look for any children with the type "Input"
 	#look to see if they have an area.
-	var playerBody = self.get_parent().get_node("Environment").get("playerBody");
-	
+	var playerBody = self.get_parent().get_parent().get_node("Environment").get("playerBody");
+	if(!playerBody):
+		print("INVALID SYSTEM NODE : COULD NOT GET playerBody from Environment Node");
+		return;
+
 	#look through the children to see if they should be given specifc 
 	#connections or other things based on the type of thing they are
 	for child in self.get_children():

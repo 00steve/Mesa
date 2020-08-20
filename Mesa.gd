@@ -1,6 +1,8 @@
 extends Spatial
 
 
+#preload("System.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
@@ -75,8 +77,11 @@ func SetupSceneSystems(sceneNode):
 						nextState = 20;
 				#if node is a System, setup the system
 				10:
-					systemName = block;
+					systemName = block + "System";
 					print(" - is System[" + systemName + "]");
+					var sys = MesaSystemNode.new();
+					sys.set_name(systemName);
+					sceneNode.add_child(sys);
 					break;
 				#if node is a component of a system, keep 
 				#digging to determine which type of component 
