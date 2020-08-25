@@ -2,6 +2,7 @@ extends Spatial
 
 onready var MesaComponentClass = preload("res://util/MesaComponent.gd")
 onready var MesaLightClass = preload("res://util/MesaLight.gd")
+onready var MSwitchClass = preload("res://util/MSwitch.gd")
 #preload("System.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -39,6 +40,7 @@ func SetupSceneFromBlender(sceneName):
 func SetupSceneSystems(sceneNode):
 	var systems = {};
 	var components = [];
+	var componentParts = [];
 	
 	var childName;
 	var block;
@@ -55,7 +57,6 @@ func SetupSceneSystems(sceneNode):
 		childName = child.get_name();
 		#print("child name : " + childName);
 		while(state > -1):
-
 			#print(block + " - " + childName);
 			match(state):
 				#don't know if this is a valid component yet
@@ -109,12 +110,24 @@ func SetupSceneSystems(sceneNode):
 					blockIndexEnd = childName.find("_");
 					block = childName.substr(0,blockIndexEnd);
 					childName = childName.substr(blockIndexEnd+1);
+					if(blockIndexEnd > -1):
+						nextState = 22;
+					else:
+						print("\t - component " + block);
+						var component = MesaComponent.new();
+						component.SystemName = systemName;
+						component.ComponentType = componentType;
+						component.ComponentName = componentName;
+						component.ComponentNode = child;
+						components.push_back(component);
+						break;
+				22:
+					print("\t - component part system[" + systemName + "]" + block + " -> part " + childName);
 					var component = MesaComponent.new();
 					component.SystemName = systemName;
-					component.ComponentType = componentType;
-					component.ComponentName = componentName;
-					component.ComponentNode = child;
-					components.push_back(component);
+					component.ComponentType = childName;
+					component.ComponentName = block;
+					componentParts.push_back(component);
 					break;
 				25:
 					print("\t - invalid component type");
@@ -123,19 +136,32 @@ func SetupSceneSystems(sceneNode):
 	
 	#add components to each system
 	for component in components:
+
+		#make sure the component is a valid type
+		#print("child(" + component.ComponentNode.get_class() + ")");
+		match component.ComponentType:
+			"MSwitch":
+				print(" - is MSwitch");
+				component.node = MSwitch.new(component.ComponentNode);
+				for cp in componentParts:
+					if(cp.SystemName == component.SystemName && cp.ComponentName == component.ComponentName):
+						
+						print(cp.SystemName + ":" + cp.ComponentName + ":" + cp.ComponentType);
+			"MesaLight":
+				print(" - is MesaLight");
+				component.node = MesaLight.new(component.ComponentNode);
+				for cp in componentParts:
+					if(cp.SystemName == component.SystemName && cp.ComponentName == component.ComponentName):
+						print("that shit matches");
+
+	for component in components:
+		if(!component.node):
+			print("no valid node was generated for the component");
+			continue;
 		#validate that it is a valid system, based on the name
 		systemName = component.SystemName;
 		if(!systems.has(systemName)):
 			print("system " + component.SystemName + " doesn't exist - skip");
 			break;
 		var system = systems[systemName];
-		#make sure the component is a valid type
-		#print("child(" + component.ComponentNode.get_class() + ")");
-		match component.ComponentType:
-			"MSwitch":
-				print(" - is MSwitch");
-			"MesaLight":
-				print(" - is MesaLight");
-				var node = MesaLight.new(component.ComponentNode);
-				system.add_child(node);
-		
+		system.add_child(component.node);

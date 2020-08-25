@@ -5,3 +5,4 @@ var SystemName;
 var ComponentName;
 var ComponentType;
 var ComponentNode;
+var node;

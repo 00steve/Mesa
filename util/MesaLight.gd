@@ -7,25 +7,19 @@ class_name MesaLight
 var on = false;
 var lightNode = null;
 
+var rand = RandomNumberGenerator.new()
 
 func _init(omniLightNode):
 	lightNode = omniLightNode;
-	print("setup MesaLight");
-	#print(" - base class = " + lightNode.get_class());
 	self.add_child(lightNode);
-	lightNode.set_color(Color(1,0,0,1));
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+	rand.randomize();
+	lightNode.set_color(Color(rand.randfn(0,1),rand.randfn(0,1),rand.randfn(0,1),1));
+	
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 func Interaction(player):
 	print("player did something with the light");
 	on = !on;
 	if(on):
-		show();
+		lightNode.show();
 	if(!on):
-		hide();
+		lightNode.hide();

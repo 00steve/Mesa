@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scene/origin_and_cradle.escn" type="PackedScene" id=2]
 [ext_resource path="res://Mesa.gd" type="Script" id=3]
 [ext_resource path="res://Ladder.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Ladders.tscn" type="PackedScene" id=5]
@@ -57,3 +58,6 @@ transform = Transform( 0.602762, 0, 0.797921, 0, 1, 0, -0.797921, 0, 0.602762, -
 
 [node name="coffee_table_02" parent="infirmary" instance=ExtResource( 11 )]
 transform = Transform( 0.221193, -0.388124, 0.894669, 0.868813, 0.49514, 1.47563e-08, -0.442987, 0.7773, 0.446729, 1.06928, 1.6511, -2.85024 )
+
+[node name="origin_and_cradle" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8015, 1.99131, -77.0472 )
