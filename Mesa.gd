@@ -3,7 +3,8 @@ extends Spatial
 onready var MesaComponentClass = preload("res://util/MesaComponent.gd")
 onready var MesaLightClass = preload("res://util/MesaLight.gd")
 onready var MSwitchClass = preload("res://util/MSwitch.gd")
-#preload("System.tscn")
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -127,6 +128,7 @@ func SetupSceneSystems(sceneNode):
 					component.SystemName = systemName;
 					component.ComponentType = childName;
 					component.ComponentName = block;
+					component.ComponentNode = child;
 					componentParts.push_back(component);
 					break;
 				25:
@@ -134,7 +136,7 @@ func SetupSceneSystems(sceneNode):
 					break;
 			state = nextState;
 	
-	#add components to each system
+	#create component nodes
 	for component in components:
 
 		#make sure the component is a valid type
@@ -142,18 +144,20 @@ func SetupSceneSystems(sceneNode):
 		match component.ComponentType:
 			"MSwitch":
 				print(" - is MSwitch");
-				component.node = MSwitch.new(component.ComponentNode);
+				component.node = MSwitch.new(component);
 				for cp in componentParts:
 					if(cp.SystemName == component.SystemName && cp.ComponentName == component.ComponentName):
-						
+						component.node.AddComponent(cp);
 						print(cp.SystemName + ":" + cp.ComponentName + ":" + cp.ComponentType);
 			"MesaLight":
 				print(" - is MesaLight");
-				component.node = MesaLight.new(component.ComponentNode);
+				component.node = MesaLight.new(component);
 				for cp in componentParts:
 					if(cp.SystemName == component.SystemName && cp.ComponentName == component.ComponentName):
 						print("that shit matches");
-
+	
+	print("GENERATED COMPONENTS: " + String(components.size()));
+	#add components to systems
 	for component in components:
 		if(!component.node):
 			print("no valid node was generated for the component");
@@ -165,3 +169,8 @@ func SetupSceneSystems(sceneNode):
 			break;
 		var system = systems[systemName];
 		system.add_child(component.node);
+		print("add child " + component.node.get_name() + " to system " + systemName);
+		
+	#initialize systems
+	for i in systems:
+		systems[i].Init();

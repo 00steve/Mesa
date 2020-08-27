@@ -1644,7 +1644,7 @@ transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, 1.0, 0.0, -1.0, -4.37114
 light_negative = false
 shadow_enabled = true
 
-[node name="System_UtilHall01_MesaLight_Light003" type="OmniLight" parent="."]
+[node name="System_Light01_MesaLight_Light003" type="OmniLight" parent="."]
 
 light_specular = 1.0
 light_color = Color(1.0, 1.0, 1.0, 1.0)

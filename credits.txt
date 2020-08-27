@@ -1,3 +1,15 @@
+testers/feedback:
+Brian Dubis
+Matt Korek
+
+
+writers:
+Denver Bramel
+Steve Krenz
+
+
 textures:
 https://www.deviantart.com/hhh316/gallery
 https://www.deviantart.com/agf81/gallery
+https://www.sketchuptextureclub.com/
+

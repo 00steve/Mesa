@@ -19,6 +19,12 @@ func _ready():
 		break; #assuming there is only one object called Area
 
 	
+func AddComponent(newComponent):
+	print("default - add component(" + newComponent.ComponentType + ")");
+	
+func Init():
+	print("default MesaSpatial.Init()");
+	
 
 func InteractionArea():
 	return interactionArea;

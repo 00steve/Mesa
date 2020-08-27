@@ -9,11 +9,16 @@ var lightNode = null;
 
 var rand = RandomNumberGenerator.new()
 
-func _init(omniLightNode):
-	lightNode = omniLightNode;
+func _init(newComponent):
+	lightNode = newComponent.ComponentNode;
 	self.add_child(lightNode);
-	rand.randomize();
-	lightNode.set_color(Color(rand.randfn(0,1),rand.randfn(0,1),rand.randfn(0,1),1));
+	self.set_name(newComponent.ComponentName+"Device");
+	
+	var lightClass = lightNode.get_class();
+	if(lightClass == "OmniLight"):
+		SetupOmniLight();
+	
+	
 	
 
 func Interaction(player):
@@ -23,3 +28,8 @@ func Interaction(player):
 		lightNode.show();
 	if(!on):
 		lightNode.hide();
+
+
+func SetupOmniLight():
+	rand.randomize();
+	lightNode.set_color(Color(rand.randfn(0,1),rand.randfn(0,1),rand.randfn(0,1),1));

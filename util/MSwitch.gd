@@ -1,7 +1,9 @@
 extends "../iface/MesaSpatial.gd"
+
 class_name MSwitch
 
 onready var Interaction = preload("res://util/Interaction.gd");
+onready var MSwitchArea = preload("res://util/MSwitchArea.gd");
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -15,18 +17,28 @@ var bzpos;
 var bzpush;
 var switchNode;
 
-func _init(newSwitchNode):
-	print("initialize new MSwitch");
-	switchNode = newSwitchNode;
-	#var area = MSwitchArea.new();
+func _init(newComponent):
+	switchNode = newComponent.node;
+	self.set_name(newComponent.ComponentName + "Input");
+	print("initialize new MSwitch - " + self.get_name());
+
 	
+func AddComponent(newComponent):
+	print("MSwitch - add component");
+	.AddComponent(newComponent);
+
+func Init():
+	pass;
+	#print("add area to MSwitch");
+	#switchNode.add_child(area);
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	
-	
-	pass;
+	#area.translate(switchNode.get_translation());
+	var area = MSwitchArea.new();
+	#switchNode.add_child(area);
+	print("add area to MSwitch");
 	#bzpos = $MSwitchCase/MSwitchButton.translation.z;
 	#bzpush = 0;
 

@@ -28,7 +28,12 @@ var deviceTypeIndex;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
+	print("scene is ready");
+	#Init();
+	
+func Init():
+	
+	print("setup system");
 	inputs = [];
 	inputs.resize(8); #this should be more than enough things ever. We'll see
 	
@@ -68,7 +73,12 @@ func _ready():
 			print(" - child " + child.get_name() + " is not a valid object type");
 			continue;
 		if(objectType == "Input"):
+			print(" - found child Input");
+			child.Init();
 			var area = child.get_node("Area");
+			if(!area):
+				print("[ error ] input has no area child node");
+				continue;
 			area.connect("start_interacting",playerBody,"StartInteracting");
 			area.connect("end_interacting",playerBody,"EndInteracting");
 			#call back to the system when system_event is emitted, this will
