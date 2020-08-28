@@ -42,9 +42,24 @@ func Init():
 	print("[init "  + self.get_name() + "]");
 	var area = MSwitchArea.new();
 	area.set_name("Area");
-	#print(self.get_name() + " offset is " + String(switchNode.transform.origin.x) + "," + String(switchNode.transform.origin.y) + "," + String(switchNode.transform.origin.z));
-	area.transform.origin = switchNode.transform.origin;
+	#area.
+	print(self.get_name() + " offset is " + String(switchNode.transform.origin.x) + "," + String(switchNode.transform.origin.y) + "," + String(switchNode.transform.origin.z));
+	#print(self.get_name() + " offset is " + String(self.transform.origin.x) + "," + String(self.transform.origin.y) + "," + String(self.transform.origin.z));
+	#area.transform.origin = switchNode.transform.origin;
+		
+	var shape = SphereShape.new();
+	shape.radius = 5;
+	
+	var collision = CollisionShape.new();
+	collision.set_shape(shape);
+
+	area.add_child(collision);
 	self.add_child(area);
+	
+	#self.transform.origin = switchNode.transform.origin;
+	
+	print(self.get_name() + " offset is " + String(self.transform.origin.x) + "," + String(self.transform.origin.y) + "," + String(self.transform.origin.z));
+	.Init();
 
 
 # Called when the node enters the scene tree for the first time.

@@ -89,6 +89,9 @@ func _input(event):
 	
 	pressingInteractButton = Input.is_action_pressed("move_interact");
 
+	if Input.is_mouse_button_pressed(BUTTON_RIGHT):
+		print(String(self.translation.x) + "," + String(self.translation.y) + "," + String(self.translation.z));
+		
 	if Input.is_action_pressed("move_jump"):
 		jumping = true;
 		match movementState:

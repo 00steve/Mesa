@@ -78,7 +78,7 @@ func Init():
 			print(" - child " + child.get_name() + " is not a valid object type");
 			continue;
 		if(objectType == "Input"):
-			print(" - found child Input" + child.get_name());
+			print(" - found child Input " + child.get_name());
 			child.Init();
 			var area = child.get_node("Area");
 			if(!area):
@@ -92,6 +92,7 @@ func Init():
 			child.connect("system_event",self,"OnInput");
 			inputs.append(child);
 			continue;
+			
 		if(objectType == "Device"):
 			var device = child;
 			#device.connect("interact_event",self,"Interaction");

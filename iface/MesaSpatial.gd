@@ -6,9 +6,17 @@ var interactionArea = null;
 var lastError = -1;
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pass;
+
+	
+func AddComponentPart(newComponent):
+	print("default - add component(" + newComponent.ComponentType + ")");
+	
+func Init():
 	for child in get_children():
 		if(child.get_name() != "Area"):
 			continue;
+		print("found area");
 		interactionArea = child;
 		lastError = interactionArea.connect("body_entered",interactionArea,"SignalStartInteracting");
 		if(lastError != OK):
@@ -17,13 +25,6 @@ func _ready():
 		if(lastError != OK):
 			print("Error: " + lastError);
 		break; #assuming there is only one object called Area
-
-	
-func AddComponentPart(newComponent):
-	print("default - add component(" + newComponent.ComponentType + ")");
-	
-func Init():
-	print("default MesaSpatial.Init()");
 	
 
 func InteractionArea():

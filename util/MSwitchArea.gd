@@ -14,6 +14,13 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+func body_entered(body):
+	print("body in");
+	
+func body_exited(body):
+	print("things happened");
+	
+
 	
 func SignalStartInteracting(area):
 	print("start interacting probably");
