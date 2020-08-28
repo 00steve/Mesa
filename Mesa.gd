@@ -53,6 +53,10 @@ func SetupSceneSystems(sceneNode):
 	var componentType;
 	var componentName;
 	
+	
+	#parse all of the nodes in the escn, they are all at the same level, so we
+	#have to depend 100% on the name of the node to determine how the node should
+	#be added to the scene tree and what child nodes it should have.
 	for child in sceneNode.get_children():
 		state = 0;
 		childName = child.get_name();
@@ -84,8 +88,8 @@ func SetupSceneSystems(sceneNode):
 				#if node is a System, setup the system
 				10:
 					systemName = block;
-					print(" - is System[" + systemName + "]");
-					var sys = MesaSystemNode.new();
+					#print(" - is System[" + systemName + "]");
+					var sys = MesaSystemNode.new(systemName);
 					sys.set_name(systemName + "System");
 					sceneNode.add_child(sys);
 					systems[systemName] = sys;
@@ -114,7 +118,7 @@ func SetupSceneSystems(sceneNode):
 					if(blockIndexEnd > -1):
 						nextState = 22;
 					else:
-						print("\t - component " + block);
+						#print("\t - component " + block);
 						var component = MesaComponent.new();
 						component.SystemName = systemName;
 						component.ComponentType = componentType;
@@ -123,7 +127,7 @@ func SetupSceneSystems(sceneNode):
 						components.push_back(component);
 						break;
 				22:
-					print("\t - component part system[" + systemName + "]" + block + " -> part " + childName);
+					#print("\t - component part system[" + systemName + "]" + block + " -> part " + childName);
 					var component = MesaComponent.new();
 					component.SystemName = systemName;
 					component.ComponentType = childName;
@@ -143,18 +147,22 @@ func SetupSceneSystems(sceneNode):
 		#print("child(" + component.ComponentNode.get_class() + ")");
 		match component.ComponentType:
 			"MSwitch":
-				print(" - is MSwitch");
+				#print(" - is MSwitch");
 				component.node = MSwitch.new(component);
 				for cp in componentParts:
 					if(cp.SystemName == component.SystemName && cp.ComponentName == component.ComponentName):
-						component.node.AddComponent(cp);
-						print(cp.SystemName + ":" + cp.ComponentName + ":" + cp.ComponentType);
+						cp.ComponentName = component.node.get_name();
+						#component.node.AddComponent(cp);
+						#print(cp.SystemName + ":" + cp.ComponentName + ":" + cp.ComponentType);
 			"MesaLight":
-				print(" - is MesaLight");
+				#print(" - is MesaLight");
 				component.node = MesaLight.new(component);
 				for cp in componentParts:
 					if(cp.SystemName == component.SystemName && cp.ComponentName == component.ComponentName):
-						print("that shit matches");
+						cp.ComponentName = component.node.get_name();
+				#		print("that shit matches");
+			_:
+				print("component type \"" + component.ComponentType + "\" is invalid");
 	
 	print("GENERATED COMPONENTS: " + String(components.size()));
 	#add components to systems
@@ -170,6 +178,21 @@ func SetupSceneSystems(sceneNode):
 		var system = systems[systemName];
 		system.add_child(component.node);
 		print("add child " + component.node.get_name() + " to system " + systemName);
+		
+		
+	#add component parts to system components
+	for cp in componentParts:
+		var system = systems[cp.SystemName];
+		if(!system):
+			print("system part is not in valid system");
+			continue;
+		var component = system.get_node(cp.ComponentName);
+		if(!component):
+			print("component is not valid");
+			continue;
+		component.AddComponentPart(cp);
+		print(cp.SystemName + ":" + cp.ComponentName + ":" + cp.ComponentType);
+		
 		
 	#initialize systems
 	for i in systems:

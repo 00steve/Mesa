@@ -16,31 +16,41 @@ var hia;
 var bzpos;
 var bzpush;
 var switchNode;
+var buttonNode;
 
 func _init(newComponent):
-	switchNode = newComponent.node;
+	switchNode = newComponent.ComponentNode;
+	if(!switchNode):
+		print("switchNode is invalid, FAIL!");
+		return;
 	self.set_name(newComponent.ComponentName + "Input");
-	print("initialize new MSwitch - " + self.get_name());
+	print("[system component " + self.get_name() + " is ready]");
 
 	
-func AddComponent(newComponent):
-	print("MSwitch - add component");
-	.AddComponent(newComponent);
+func AddComponentPart(newComponent):
+	print("MSwitch - add component part ");
+	match newComponent.ComponentType:
+		"Button":
+			print("\t - child is Button");
+			#switchNode.add_child(button_node);
+		_:
+			print("\t - child is unknown");
+	#switchNode.add_child(newComponent.node);
+	#.AddComponent(newComponent);
 
 func Init():
-	pass;
-	#print("add area to MSwitch");
-	#switchNode.add_child(area);
+	print("[init "  + self.get_name() + "]");
+	var area = MSwitchArea.new();
+	area.set_name("Area");
+	#print(self.get_name() + " offset is " + String(switchNode.transform.origin.x) + "," + String(switchNode.transform.origin.y) + "," + String(switchNode.transform.origin.z));
+	area.transform.origin = switchNode.transform.origin;
+	self.add_child(area);
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#area.translate(switchNode.get_translation());
-	var area = MSwitchArea.new();
-	#switchNode.add_child(area);
-	print("add area to MSwitch");
-	#bzpos = $MSwitchCase/MSwitchButton.translation.z;
-	#bzpush = 0;
+	pass;
+
 
 
 func OnInput(actor):

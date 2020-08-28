@@ -13,6 +13,7 @@ func _init(newComponent):
 	lightNode = newComponent.ComponentNode;
 	self.add_child(lightNode);
 	self.set_name(newComponent.ComponentName+"Device");
+	print("[system component " + self.get_name() + " is ready]");
 	
 	var lightClass = lightNode.get_class();
 	if(lightClass == "OmniLight"):

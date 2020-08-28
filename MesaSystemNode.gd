@@ -26,9 +26,13 @@ var inputNameIndex;
 var deviceType;
 var deviceTypeIndex;
 
+func _init(newSystemName):
+	self.set_name(newSystemName);
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("scene is ready");
+	print("[system " + self.get_name() + " is ready]");
 	#Init();
 	
 func Init():
@@ -67,13 +71,14 @@ func Init():
 				continue;
 			objectType = childName.substr(childTypeIndex,childType.length());
 			#print("found child of type: " + objectType);
+			#print("found child " + childName);
 			break;
 		#depending on the type
 		if(objectType == null):
 			print(" - child " + child.get_name() + " is not a valid object type");
 			continue;
 		if(objectType == "Input"):
-			print(" - found child Input");
+			print(" - found child Input" + child.get_name());
 			child.Init();
 			var area = child.get_node("Area");
 			if(!area):

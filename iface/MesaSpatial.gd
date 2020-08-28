@@ -19,7 +19,7 @@ func _ready():
 		break; #assuming there is only one object called Area
 
 	
-func AddComponent(newComponent):
+func AddComponentPart(newComponent):
 	print("default - add component(" + newComponent.ComponentType + ")");
 	
 func Init():
