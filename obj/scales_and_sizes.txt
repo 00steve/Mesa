@@ -31,13 +31,15 @@ trainyard:
 	next to the hangars
 
 town:
-	
+
 
 base:
 	(creech airforce base as example)
-	
-		invisioned as tent city, temporary plywood structures, rebuild some runways
+	important things will have inner fences with guard shack on one side with (vehicle gate/or rolly fence),
+		also would have a path for people (just an opening)
+	invisioned as tent city, temporary plywood structures, rebuild some runways
 	military range close (staging, fly out of, near a test range, in an area nobody wants, not a lot of people live, close to main base for logistics)
+	from the 50's to now, there would be an entryway added to the hangar to badge people in, possibly metal detectors, (more sophisticated entry procedure)
 
 		built base to support that which would have hangars and an air strip
 			(while building base they found cave system)

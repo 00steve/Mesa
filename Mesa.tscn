@@ -1,67 +1,34 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scene/origin.escn" type="PackedScene" id=2]
+[ext_resource path="res://scene/mesa.escn" type="PackedScene" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Mesa.gd" type="Script" id=3]
-[ext_resource path="res://Ladder.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Ladders.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scene/cradle.escn" type="PackedScene" id=6]
-[ext_resource path="res://MSwitch.tscn" type="PackedScene" id=7]
-[ext_resource path="res://util/System.tscn" type="PackedScene" id=8]
-[ext_resource path="res://util/MesaLight.gd" type="Script" id=9]
-[ext_resource path="res://scene/infirmary.escn" type="PackedScene" id=10]
-[ext_resource path="res://obj/coffee_table_01.tscn" type="PackedScene" id=11]
+[ext_resource path="res://obj/sky_01.jpg" type="Texture" id=4]
+
+[sub_resource type="PanoramaSky" id=1]
+radiance_size = 1
+panorama = ExtResource( 4 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.22
+ambient_light_sky_contribution = 0.0
+tonemap_mode = 2
+tonemap_white = 8.3
+glow_enabled = true
+glow_strength = 0.69
+glow_bloom = 0.04
 
 [node name="Mesa" type="Spatial"]
 script = ExtResource( 3 )
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 7.26421, -32 )
+[node name="Player" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 8.43944, -32 )
 
-[node name="Hangar1" type="Spatial" parent="."]
-visible = false
+[node name="mesa" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.116402, 0.208244, -0.192104 )
 
-[node name="Ladders" parent="Hangar1" instance=ExtResource( 5 )]
-
-[node name="Ladder" parent="Hangar1/Ladders" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 4, -37 )
-
-[node name="Ladder2" parent="Hangar1/Ladders" instance=ExtResource( 4 )]
-transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -31, 4, -37 )
-
-[node name="LightSystem" parent="Hangar1" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 4, -31.7431 )
-visible = false
-
-[node name="MOL1Device" type="OmniLight" parent="Hangar1/LightSystem"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5 )
-light_color = Color( 0.0431373, 0.101961, 0.996078, 1 )
-light_energy = 14.64
-light_indirect_energy = 2.36
-shadow_enabled = true
-omni_range = 7.6
-script = ExtResource( 9 )
-
-[node name="MSwitchInput" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, -4 )
-
-[node name="MSwitchInput3" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, -5 )
-
-[node name="MSwitchInput2" parent="Hangar1/LightSystem" instance=ExtResource( 7 )]
-transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.78495, 2.46008, -9.55803 )
-
-[node name="infirmary" parent="." instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0527, 5.87572, -28.6856 )
-
-[node name="coffee_table_01" parent="infirmary" instance=ExtResource( 11 )]
-transform = Transform( 0.602762, 0, 0.797921, 0, 1, 0, -0.797921, 0, 0.602762, -1.00478, 0.91695, 1.33011 )
-
-[node name="coffee_table_02" parent="infirmary" instance=ExtResource( 11 )]
-transform = Transform( 0.221193, -0.388124, 0.894669, 0.868813, 0.49514, 1.47563e-08, -0.442987, 0.7773, 0.446729, 1.06928, 1.6511, -2.85024 )
-
-[node name="cradle" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.009093, 0, -0.999959, 0, 1, 0, 0.999959, 0, 0.009093, 52.074, 0, -30.4142 )
-
-[node name="origin" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.009093, 0, -0.999959, 0, 1, 0, 0.999959, 0, 0.009093, 52.074, 0, -30.4142 )
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )

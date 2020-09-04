@@ -19,7 +19,6 @@ ssao_light_affect = 0.27
 ssao_ao_channel_affect = 0.14
 ssao_quality = 0
 ssao_edge_sharpness = 0.75
-dof_blur_far_enabled = true
 dof_blur_far_distance = 159.49
 dof_blur_far_transition = 31.71
 dof_blur_far_quality = 0
