@@ -1,0 +1,69 @@
+TEXTURES:
+concrete_floor 8
+brickwall 8
+cave_wall 16
+cinder_blocks 8
+bunker_exterior 16
+
+DOORS:
+standard 1.2w x 2.5h
+
+
+
+COLORS:
+air: light green / dark green (clean / dirty)
+electrical: black / red (ground / live)
+water: light blue / dark blue (clean / dirty)
+
+
+airport:
+one landing strip (supports hundreds of takeoffs/landings per day)
+at least 150ft wide
+bring in cargo - C130S - 3000ft
+	- C5 - 13000ft
+civilians- 737 - 6000ft
+
+trainyard:
+	in the town, the military has privates to move it from town to the base
+	old, probably built late 40s
+	a few y switches around the trainyard
+	old abandoned boxcars on switch end
+	next to the hangars
+
+town:
+	
+
+base:
+	(creech airforce base as example)
+	
+		invisioned as tent city, temporary plywood structures, rebuild some runways
+	military range close (staging, fly out of, near a test range, in an area nobody wants, not a lot of people live, close to main base for logistics)
+
+		built base to support that which would have hangars and an air strip
+			(while building base they found cave system)
+		that's what caused them to build up the underground laboratory around that
+	was already a town around, built up infrastructure around town
+	
+	other buildings
+	- dormatories for people who don't live off base
+	- dining hall
+	- gym
+
+nothing should be underground that doesn't need to be
+
+
+
+
+built staging base in wwii,
+town started springing up around it,	
+	old military housing close
+	dorms on base
+	chow hall
+towards beginning of cold war started building alternative to cheyanne mountain 
+while building underground base, find cave
+open up into the cave system, all of the workers die in 30 minutes
+symptoms of people before they die is they start going crazy
+
+
+
+
