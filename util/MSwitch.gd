@@ -32,7 +32,7 @@ func AddComponentPart(newComponent):
 	match newComponent.ComponentType:
 		"Button":
 			print("\t - child is Button");
-			#switchNode.add_child(button_node);
+			#self.add_child(newComponent.node);
 		_:
 			print("\t - child is unknown");
 	#switchNode.add_child(newComponent.node);
@@ -42,15 +42,14 @@ func Init():
 	print("[init "  + self.get_name() + "]");
 	var area = MSwitchArea.new();
 	area.set_name("Area");
-	#area.
-	print(switchNode.get_name() + " offset is " + String(switchNode.transform.origin.x) + "," + String(switchNode.transform.origin.y) + "," + String(switchNode.transform.origin.z));
+	#print(switchNode.get_name() + " offset is " + String(switchNode.transform.origin.x) + "," + String(switchNode.transform.origin.y) + "," + String(switchNode.transform.origin.z));
 	#print(self.get_name() + " offset is " + String(self.transform.origin.x) + "," + String(self.transform.origin.y) + "," + String(self.transform.origin.z));
 	var parent = switchNode.get_parent();
 	#print("- parent " + parent.get_name());
 	#print(parent.get_name() + " offset is " + String(parent.transform.origin.x) + "," + String(parent.transform.origin.y) + "," + String(parent.transform.origin.z));
 		
 	var shape = SphereShape.new();
-	shape.radius = 2.5;
+	shape.radius = .5; #this seems like a good distance for a button, you have to be right there to push it.
 	
 	var collision = CollisionShape.new();
 	collision.set_shape(shape);
@@ -60,7 +59,7 @@ func Init():
 	
 	self.transform.origin = parent.transform.origin + switchNode.transform.origin;
 
-	print(self.get_name() + " has offset is " + String(self.transform.origin.x) + "," + String(self.transform.origin.y) + "," + String(self.transform.origin.z));
+	#print(self.get_name() + " has offset is " + String(self.transform.origin.x) + "," + String(self.transform.origin.y) + "," + String(self.transform.origin.z));
 	
 	#var mi = MeshInstance.new();
 	#var me = SphereMesh.new();

@@ -14,18 +14,16 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-func body_entered(body):
-	print("body in");
-	
-func body_exited(body):
-	print("things happened");
-	
 
-	
+
+#on body enter (assigned in MesaSpatial.gd)
+#emit signal to player (assigned in MesaSystemNode.gd)
 func SignalStartInteracting(area):
 	print("start interacting probably");
 	emit_signal("start_interacting",self);
 
+#on body exit (assigned in MesaSpatial.gd)
+#emit signal to player (assigned in MesaSystemNode.gd)
 func SignalEndInteracting(area):
 	print("end interacting probably");
 	emit_signal("end_interacting",self);

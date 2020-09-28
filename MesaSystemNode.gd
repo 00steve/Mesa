@@ -84,8 +84,10 @@ func Init():
 			if(!area):
 				print("[ error ] input has no area child node");
 				continue;
-			area.connect("start_interacting",playerBody,"StartInteracting");
-			area.connect("end_interacting",playerBody,"EndInteracting");
+			#print("connect up signals");
+			area.connect("start_interacting",playerBody.find_node("PlayerBody"),"StartInteracting");
+			area.connect("end_interacting",playerBody.find_node("PlayerBody"),"EndInteracting");
+			#print("connected to node : " + playerBody.get_name());
 			#call back to the system when system_event is emitted, this will
 			#call OnInput(Interaction i), the input supplying the interaction
 			#object to OnInput() should populate it however it makes sense.

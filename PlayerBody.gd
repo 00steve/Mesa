@@ -6,6 +6,8 @@ onready var MesaInput = preload("res://MesaInput.gd");
 
 signal start_press_button;
 signal end_press_button;
+#signal start_interacting;
+#signal end_interacting;
 signal interact_event(data);
 
 #movement states
@@ -150,6 +152,7 @@ func GetClosestInteraction():
 func Interact():
 	if (!pressingInteractButton || canInteract == 0) && interacting: #or list of interactable objects is 
 		interacting = false;
+		print("stop interacting");
 		emit_signal("interact_event",self);
 		return;
 		
@@ -157,6 +160,7 @@ func Interact():
 		
 	if pressingInteractButton && canInteract > 0 && !interacting: #and list of interactable objects is 1 or more
 		interacting = true;
+		print("start interacting");
 		emit_signal("interact_event",self);
 		return; #nothing left to do after this, bitch
 
@@ -172,10 +176,12 @@ func EndClimbing(area):
 		movementState = 2;
 
 func StartInteracting(area):
+	#print("can start interacting");
 	canInteract += 1;
 	interactions.push_back(area);
 
 func EndInteracting(area):
+	#print("can't interact, bitch!");
 	canInteract -= 1;
 	interactions.erase(area);
 

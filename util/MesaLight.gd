@@ -23,8 +23,9 @@ func _init(newComponent):
 	
 
 func Interaction(player):
-	print("player did something with the light");
+	#print("player did something with the light");
 	on = !on;
+	#print("Turn light " + lightNode.get_name() + " on = " + String(on));
 	if(on):
 		lightNode.show();
 	if(!on):
