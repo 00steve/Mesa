@@ -43,22 +43,32 @@ func Init():
 	var area = MSwitchArea.new();
 	area.set_name("Area");
 	#area.
-	print(self.get_name() + " offset is " + String(switchNode.transform.origin.x) + "," + String(switchNode.transform.origin.y) + "," + String(switchNode.transform.origin.z));
+	print(switchNode.get_name() + " offset is " + String(switchNode.transform.origin.x) + "," + String(switchNode.transform.origin.y) + "," + String(switchNode.transform.origin.z));
 	#print(self.get_name() + " offset is " + String(self.transform.origin.x) + "," + String(self.transform.origin.y) + "," + String(self.transform.origin.z));
-	#area.transform.origin = switchNode.transform.origin;
+	var parent = switchNode.get_parent();
+	#print("- parent " + parent.get_name());
+	#print(parent.get_name() + " offset is " + String(parent.transform.origin.x) + "," + String(parent.transform.origin.y) + "," + String(parent.transform.origin.z));
 		
 	var shape = SphereShape.new();
-	shape.radius = 5;
+	shape.radius = 2.5;
 	
 	var collision = CollisionShape.new();
 	collision.set_shape(shape);
-
 	area.add_child(collision);
+	area.transform.origin = Vector3(0,0,0);#+= parent.transform.origin;
 	self.add_child(area);
 	
-	#self.transform.origin = switchNode.transform.origin;
+	self.transform.origin = parent.transform.origin + switchNode.transform.origin;
+
+	print(self.get_name() + " has offset is " + String(self.transform.origin.x) + "," + String(self.transform.origin.y) + "," + String(self.transform.origin.z));
 	
-	print(self.get_name() + " offset is " + String(self.transform.origin.x) + "," + String(self.transform.origin.y) + "," + String(self.transform.origin.z));
+	#var mi = MeshInstance.new();
+	#var me = SphereMesh.new();
+	#mi.mesh = me;
+	#me.radius = 2.5;
+	#me.height = 5;
+	#self.add_child(mi);
+	
 	.Init();
 
 

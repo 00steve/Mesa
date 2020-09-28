@@ -110,5 +110,13 @@ move_interact={
 
 [rendering]
 
-quality/filters/msaa=2
+quality/shadow_atlas/size=8192
+quality/shadow_atlas/quadrant_0_subdiv=2
+quality/shadow_atlas/quadrant_1_subdiv=3
+quality/shadow_atlas/quadrant_2_subdiv=4
+quality/shadow_atlas/quadrant_3_subdiv=5
+quality/filters/use_nearest_mipmap_filter=true
+limits/buffers/canvas_polygon_buffer_size_kb=256
+limits/buffers/canvas_polygon_index_buffer_size_kb=256
+quality/filters/msaa=4
 environment/default_environment="res://default_env.tres"

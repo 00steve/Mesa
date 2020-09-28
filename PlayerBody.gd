@@ -48,7 +48,7 @@ func _ready():
 	cameraRotateVelocity = Vector2(0,0);
 	cameraRotateSmoothing = 3;
 	mouseMove = Vector2(0,0);
-	speed = 200;
+	speed = 1;
 	strafeDirection = Vector3(0,0,0);
 	moveDirection = Vector3(0,0,0);
 	velocity = Vector3(0,0,0);
@@ -187,17 +187,21 @@ func Move(delta):
 			moveDirection = Vector3(sin(cameraAngle.y)*strafeDirection.z
 				+ cos(cameraAngle.y)*strafeDirection.x,0,
 				cos(cameraAngle.y)*strafeDirection.z
-				+ -sin(cameraAngle.y)*strafeDirection.x)*5;
+				+ -sin(cameraAngle.y)*strafeDirection.x)*3;
 			if velocity.y > 0:
 				gravity = -20;
 			else:
 				gravity = -30;
+				
 			velocity.y += gravity * delta;
+			
 			if isOnFloor:
 				velocity.x = moveDirection.x;
 				velocity.z = moveDirection.z;
 				if !jumping && isOnFloor:
 					velocity.y = velocity.y/10;
+
+					
 		1:#climbing
 			gravity = 0;
 			moveDirection = Vector3(0,cos(-cameraAngle.x)*strafeDirection.z*climbSpeed,0);
@@ -224,6 +228,7 @@ func Move(delta):
 	#update the velocity of the player. Always update the velocity based on 
 	#gravity. Only update the x/z velocities if the player is on the floor.
 	#velocity = move_and_slide(velocity,Vector3(0,1,0))
-	velocity = move_and_slide(velocity,Vector3(0,1,0),true, 4,1.6,false);
+	velocity = move_and_slide(velocity,Vector3(0,1,0),true, 4,.57,false);
 	#at the end of everything, check to see if the player is on the floor
 	isOnFloor = is_on_floor();
+	#print("is on floor: " + String(isOnFloor));

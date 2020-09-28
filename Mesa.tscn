@@ -1,34 +1,45 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://scene/mesa.escn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Mesa.gd" type="Script" id=3]
 [ext_resource path="res://obj/sky_01.jpg" type="Texture" id=4]
+[ext_resource path="res://scene/infirmary.escn" type="PackedScene" id=5]
 
 [sub_resource type="PanoramaSky" id=1]
-radiance_size = 1
+radiance_size = 0
 panorama = ExtResource( 4 )
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
 background_sky = SubResource( 1 )
+background_sky_custom_fov = 47.2
 ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 0.22
+ambient_light_energy = 0.1
 ambient_light_sky_contribution = 0.0
+fog_enabled = true
+fog_color = Color( 0.207843, 0.45098, 0.639216, 1 )
+fog_depth_begin = 400.0
+fog_depth_end = 1000.0
 tonemap_mode = 2
-tonemap_white = 8.3
+tonemap_exposure = 0.53
+tonemap_white = 6.44
+dof_blur_far_enabled = true
+dof_blur_far_distance = 500.0
+dof_blur_far_transition = 3.84
+dof_blur_far_quality = 2
 glow_enabled = true
-glow_strength = 0.69
-glow_bloom = 0.04
+glow_intensity = 1.19
+glow_strength = 0.77
+glow_bloom = 0.16
 
 [node name="Mesa" type="Spatial"]
 script = ExtResource( 3 )
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 8.43944, -32 )
+[node name="infirmary" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 0.999363, -0.0357019, 0, 0.0357019, 0.999363, -14.058, 3.98594, -14.9519 )
 
-[node name="mesa" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.116402, 0.208244, -0.192104 )
+[node name="Player" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 0.999363, -0.0357019, 0, 0.0357019, 0.999363, 4.4951, 4.80625, -8.1576 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )

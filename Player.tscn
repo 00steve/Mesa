@@ -22,4 +22,5 @@ transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0
 
 [node name="Camera" type="Camera" parent="PlayerBody/PlayerHead"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0.15 )
-far = 268.3
+near = 0.2
+far = 1500.0
